@@ -43,41 +43,45 @@
 		 
 		%>
 		<h3>업데이트 일시 : <span><% %></span></h3>
-		<table class="table mt-3">
-			
-			<thead class="thead-dark">
-				<tr>
-					<th>주소</th>
-					<th>상호명</th>
-					<th>가격</th>
-					<th>전화번호</th>
-					<th>재고량</th>
-				</tr>
-			</thead>
-		<%
-		
-			for(int i=0; i < DEFArray.size(); i++){
-				JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
-				<tbody>
+		<form>
+			<table class="table mt-3">
+				
+				<thead class="thead-dark">
 					<tr>
-						<td id="addr"><%=DEFobject.get("addr") %></td>
-						<td><%=DEFobject.get("name") %></td>
-						<td><%=DEFobject.get("price") %></td>
-						<td><%=DEFobject.get("tel") %></td>
-						<td><%=DEFobject.get("inventory") %></td>
-						<td><%=DEFobject.get("regDt") %>
+						<th>상호명</th>
+						<th>주소</th>
+						<th>가격</th>
+						<th>전화번호</th>
+						<th>재고량</th>
 					</tr>
-				</tbody>
-				
-				
-				
-				
-		<%	}
-		 }catch(Exception e){
-			 System.out.println(e.getMessage());
-		 }
-		%>
+				</thead>
+			<%
+				//a태그로 상세정보로 이동할때, 많은 값들을 전달해야하는데 어떻게 해야하는지...form submit?
+				for(int i=0; i < DEFArray.size(); i++){
+					JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
+					<tbody>
+						<tr>
+							<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
+							<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
+							&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>"><%=DEFobject.get("name") %></a></td>
+							<td id="addr"><%=DEFobject.get("addr") %></td>
+							<td><%=DEFobject.get("price") %></td>
+							<td><%=DEFobject.get("tel") %></td>
+							<td><%=DEFobject.get("inventory") %></td>
+							<td><%=DEFobject.get("lat") %></td>
+						</tr>
+					</tbody>
+					
+					
+					
+					
+			<%	}
+			 }catch(Exception e){
+				 System.out.println(e.getMessage());
+			 }
+			%>
 		</table>
+		</form>
 	</div>
 </body>
 </html>

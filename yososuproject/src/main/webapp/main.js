@@ -25,6 +25,23 @@ function search(){
 					}
 				}
 			});
-			
-			
 }
+
+		
+$(document).ready( function(){ 
+	alert("실행");
+	var lat = document.getElementById("lat").value;
+	alert(lat);
+	var lng = document.getElementById("lng").value;
+	alert(lng);
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(lat, lng),
+		level: 3
+	};
+
+	var map = new kakao.maps.Map(container, options);
+});		
+
+	
+		
