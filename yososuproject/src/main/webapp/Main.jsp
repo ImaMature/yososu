@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="yososuproject.SimpleTesing.DateItem"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -20,14 +21,15 @@
 	<%@include file="header.jsp" %>
 	
 	<%
-		String [] s2  = new String [3];
 		String keyword = request.getParameter("keyword");
 		String pagenum = request.getParameter("pagenum");
+		String searchnum = request.getParameter("searchnum");
 		if( pagenum == null ){ 	// pagenum가 없다면 = 게시물 첫화면
 			pagenum = "1";		//1페이지 설정
 		}
-		int currentpage = Integer.parseInt(pagenum);
+		
 		String s= "";
+		String [] aa = new String [1024];
 	%>
 	
 	<div class="container">
@@ -36,13 +38,13 @@
 			<input type = "submit" class="btn btn-outline-dark col-md-2" value="검색">
 		</form>
 		<%
-		int k= 0;
-		int l = 10;
-		String [] aa = new String [1024];
-		 List<DateItem> dateList = new ArrayList<>();
 		
+		int k =0;
+		int j =2000;		
+		
+		 List<DateItem> dateList = new ArrayList<>();
 		 	
-			 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+l+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
+			 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+j+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 			 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 			 String rs = bf.readLine();
 			 
@@ -56,8 +58,24 @@
 				
 		 		//System.out.println(jsonObject.get("totalCount"));
 		 		s = String.valueOf(jsonObject.get("totalCount"));	
-		 		int lastpage = Integer.parseInt(s);
-		 		System.out.println(lastpage);
+		 		//총 게시물 수
+		 		int lastrow = Integer.parseInt(s);
+		 		//System.out.print(lastrow);
+		 		//화면당 표시할 게시물 수
+		 		int listsize = 100;
+		 		//마지막 페이지
+		 		int lastpage = 0;
+		 		//System.out.println(lastpage);
+		 		if( lastrow % listsize == 0 ){		// 만약에 총게시물/페이지당게시물 나머지가 없으면
+					lastpage = lastrow / listsize;		// * 총게시물/페이당게시물 
+				}else{
+					lastpage = lastrow / listsize+1;	// * 총게시물/페이당게시물+1
+				}
+		 		int currentpage = Integer.parseInt(pagenum);
+		 		//System.out.print(currentpage);
+				int startrow = (currentpage-1)*listsize;
+				//System.out.print(startrow);
+				int endrow = currentpage*listsize;
 		%>
 		<form action="DEFdetail.jsp">
 			<table class="table mt-3">
@@ -75,8 +93,8 @@
 						//그냥 밑에 처럼 a태그로 넘기면 해당 정보가 인터넷 주소창에 표시가됩니다. 구글링을 하면 get방식은 위험하고 post방식을 이용해야 된다고 합니다. form을 써서 넘기고 싶은데 a태그는 value가 지정되지 않습니다.
 						//input type hidden???
 								//DEFdetail에 넘겨지는 값들
-				if( keyword == null ){
-				for(int i=0; i < DEFArray.size(); i++){
+				if( keyword == null ){ // 검색이 안되면
+				for(int i=startrow+1; i < endrow; i++){
 					JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
 					<tbody id="page">
 						<tr>
@@ -89,31 +107,35 @@
 							<td><%=DEFobject.get("inventory") %></td>
 						</tr>
 					</tbody>
-			<%	} } else{ 
+			<%	} } else{ // 검색을 하면
 					String str = "";
-				
-					 for(int i=0; i < DEFArray.size(); i++){
+					
+					 for(int i=startrow+1; i < endrow; i++){
 							JSONObject DEFobject = (JSONObject) DEFArray.get(i);
+							
 							str = (String)DEFobject.get("addr");
-							
-							if(str.contains(keyword)){
-								out.print(str);
+							String addSplit1= str.split(" ")[0]; //array인덱스 자르기
+							String addSplit2= str.split(" ")[1];
+							if(addSplit1.equals(keyword) || addSplit2.equals(keyword)){
 								
-							
-			    				//String addrSplit1 = addrSplit[0];
-								%>
-									<tbody id="page">
-										<tr>
-											<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
-											<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
-											&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>"><%=DEFobject.get("name") %></a></td>
-											<td id="addr"><%=DEFobject.get("addr") %></td>
-											<td><%=DEFobject.get("price") %></td>
-											<td><%=DEFobject.get("tel") %></td>
-											<td><%=DEFobject.get("inventory") %></td>
-										</tr>
-									</tbody>
-								<%
+								String aaa = String.valueOf(keyword);
+								System.out.println(aaa);
+								aa[i] = aaa;
+								System.out.println(aa[i]);
+								
+							%>
+								<tbody id="page">
+									<tr>
+										<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
+										<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
+										&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>"><%=DEFobject.get("name") %></a></td>
+										<td id="addr"><%=DEFobject.get("addr") %></td>
+										<td><%=DEFobject.get("price") %></td>
+										<td><%=DEFobject.get("tel") %></td>
+										<td><%=DEFobject.get("inventory") %></td>
+									</tr>
+								</tbody>
+							<%
 							}
 					}
 			%>
@@ -123,29 +145,29 @@
 			<% }  %>
 			
 		</table>
-		
+		<!-- 페이징 -->
 			<div class="row">
-				<div class="col-md-6 offset-4 my-3">
+				<div class="col-md-10 offset-2 justify-content-center my-3">
 					<ul class="pagination"> <!-- 게시판 페이징 번호 -->
 							<!-- 첫페이지에서 이전 페이지 눌렀을 때  첫페이지 고정-->
 						<% if( currentpage == 1 ){%>
 							<%if ( keyword==null ) {%>
-								<li class="page-item"> <a href= "boardlist.jsp?pagenum=<%=currentpage %>"  class="page-link">이전</a> </li>
+								<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage %>"  class="page-link">이전</a> </li>
 							<%}else{ %>
-								<li class="page-item"> <a href= "boardlist.jsp?pagenum=<%=currentpage %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
+								<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
 							<%} %>	
 						<%}else{ %>
-							<li class="page-item"> <a href= "boardlist.jsp?pagenum=<%=currentpage-1 %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
+							<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage-1 %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
 						<%} %>														<!-- 현재페이지번호-1 -->
 						
 							<!-- 게시물의 수만큼 페이지 번호 생성 -->
-						<% for(int i=1; i<=l; i++){ %>
+						<% for(int i=1; i<=lastpage; i++){ %>
 						
 							<% if( keyword == null ){ %>
-							<li class="page-item"><a href="boardlist.jsp?pagenum=<%=i %>" class="page-link"> <%=i %> </a> </li>
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=i %>" class="page-link"> <%=i %> </a> </li>
 									<!-- i 클릭했을때 현재 페이지 이동 [ 클릭한 페이지번호 ] -->
 							<%}else{%>
-							<li class="page-item"><a href="boardlist.jsp?pagenum=<%=i %>&keyword=<%=keyword %>" class="page-link"> <%=i %> </a> </li>
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=i %>&keyword=<%=keyword %>" class="page-link"> <%=i %> </a> </li>
 							<%} %>
 							
 						<%} %>
@@ -153,12 +175,12 @@
 							<!-- 마지막페이지에서 다음버튼 눌렀을때 마지막 페이지 고정 -->
 						<% if( currentpage == lastpage ){%>	
 						<% if( keyword == null ){ %>
-							<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage%>" class="page-link"> 이전 </a> </li>
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage%>" class="page-link"> 다음 </a> </li>
 							<%}else{%>
-							<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage%>&keyword=<%=keyword %>" class="page-link"> 이전 </a> </li>	
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage%>&keyword=<%=keyword %>" class="page-link"> 다음 </a> </li>	
 							<%} %>
 						<%}else{ %>
-							<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword %>" class="page-link"> 이전 </a> </li>
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword %>" class="page-link">다음 </a> </li>
 						<%} %>	
 					
 					</ul>
@@ -166,5 +188,6 @@
 			</div>	
 		</form>
 	</div>
+	<%@include file="footer.jsp" %>
 </body>
 </html>
