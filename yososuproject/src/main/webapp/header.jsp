@@ -24,7 +24,7 @@
     <script src="main.js"></script>
     
     <div class="container">
-    	<div class="col-md-4 offset-4 text-center">요소수</div>
+    	<div class="col-md-4 offset-4 text-center"><a href="Main.jsp">요소수</a></div>
     </div>
     
 </body>

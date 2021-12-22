@@ -14,6 +14,7 @@
 <body>
 	<%@include file="header.jsp" %>
 	<%
+		
 		String name = request.getParameter("name");
 		String addr = request.getParameter("addr");
 		String price = request.getParameter("price");

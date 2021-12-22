@@ -52,7 +52,7 @@ public class SimpleTesing {
 					
 					dateList.add(new DateItem(aa[i][0]));
 					//dateList.add(new DateItem(aa[0][i]));
-					
+					System.out.println(aa[i][0]);
 				}
 			 
 			 
@@ -60,7 +60,9 @@ public class SimpleTesing {
 //	        dateList.add(new DateItem("2019-01-27"));
 //	        dateList.add(new DateItem("2020-03-26"));
 //	        dateList.add(new DateItem("2020-02-26"));
-	        Collections.sort(dateList, new SortByDate());
+			 //참고한거 https://www.delftstack.com/ko/howto/java/how-to-sort-objects-in-arraylist-by-date-in-java/
+	        Collections.sort(dateList ,new SortByDate());
+	        
 	        for(int i =0; i<dateList.size(); i++) {
 	        	bb[i][0] = dateList.get(i).datetime; // 정렬된 데이터 저장 
 	        	System.out.println(bb[i][0] + "dsafsd");
@@ -71,9 +73,9 @@ public class SimpleTesing {
 //	        			
 //	        		}
 //	        	}
-	        	int num = bb.length;
-	        	System.out.println(num + " : num");
-	        	System.out.print(bb[bb.length][0] + "fasdfsd");
+//	        	int num = bb.length;
+//	        	System.out.println(num + " : num");
+//	        	System.out.print(bb[bb.length][0] + "fasdfsd");
 	        	
 	        }
 	       
@@ -91,6 +93,8 @@ public class SimpleTesing {
 	            
 	            
 	        });
+	        DateItem enddate = dateList.get( dateList.size()-1 );
+	        System.out.println( enddate.datetime );
 	        
 		 }catch (Exception e) {
 			// TODO: handle exception

@@ -7,11 +7,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%
+<%-- <%
 	String keyword = request.getParameter("keyword");
 	//System.out.println(keyword+" : keyword");
 	String str = "";
 	try{
+		//요소수 api
 		 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page=1&perPage=1000&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 		 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 		 String rs = bf.readLine();
@@ -35,4 +36,4 @@
 	}catch(Exception e){
 		 System.out.println(e.getMessage());
 	}
-%>
+%> --%>
