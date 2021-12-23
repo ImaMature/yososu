@@ -10,7 +10,8 @@
 	<div id = "footer">
 		<div >
 			<ul>
-				<li>국내 최대 요소수 사이트</li>
+				<li>요소수 사이트 입니다.</li>
+				<li></li>
 			</ul>
 		</div>
 	</div>
