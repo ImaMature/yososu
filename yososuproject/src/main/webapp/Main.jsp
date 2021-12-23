@@ -1,3 +1,4 @@
+<%@page import="yososuproject.Databases"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="yososuproject.SimpleTesing.DateItem"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,6 +22,7 @@
 	<%@include file="header.jsp" %>
 	
 	<%
+		
 		String keyword = request.getParameter("keyword");
 		String pagenum = request.getParameter("pagenum");
 		String searchnum = request.getParameter("searchnum");
@@ -30,6 +32,10 @@
 		
 		String s= "";
 		String [] aa = new String [1024];
+		ArrayList<Databases> a1 = new ArrayList<>();
+		ArrayList<Databases> a2 = new ArrayList<>();
+		Databases db = new Databases();
+		
 	%>
 	
 	<div class="container">
@@ -42,7 +48,7 @@
 		int k =0;
 		int j =2000;		
 		
-		 List<DateItem> dateList = new ArrayList<>();
+		 //List<DateItem> dateList = new ArrayList<>();
 		 	
 			 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+j+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 			 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
@@ -52,7 +58,10 @@
 			 JSONObject jsonObject = (JSONObject) jsonParser.parse(rs);
 			 JSONArray DEFArray = (JSONArray) jsonObject.get("data");
 			 //System.out.print(jsonObject.get("data"));
-
+			
+			
+							
+							
 			// for(int j=0; j<json2.size(); j++){
 			 //}
 				
@@ -76,6 +85,21 @@
 				int startrow = (currentpage-1)*listsize;
 				//System.out.print(startrow);
 				int endrow = currentpage*listsize;
+				
+				
+		 		//System.out.print(lastrow);
+		 		//화면당 표시할 게시물 수
+		 		int ls = 0;
+		 		//마지막 페이지
+		 		int lp = 0;
+		 		
+		 		int lr = 0;
+		 		
+		 		int cp = 0;
+		 		//System.out.print(currentpage);
+				int sr = 0;
+				//System.out.print(startrow);
+				int er = 0;
 		%>
 		<form action="DEFdetail.jsp">
 			<table class="table mt-3">
@@ -107,46 +131,151 @@
 							<td><%=DEFobject.get("inventory") %></td>
 						</tr>
 					</tbody>
-			<%	} } else{ // 검색을 하면
-					String str = "";
-					
-					 for(int i=startrow+1; i < endrow; i++){
+			<%	} } else{ // 검색을 하면 새로 페이징
+						String str = "";
+						
+						for(int i=0; i< Integer.parseInt(s); i++){
 							JSONObject DEFobject = (JSONObject) DEFArray.get(i);
 							
-							str = (String)DEFobject.get("addr");
-							String addSplit1= str.split(" ")[0]; //array인덱스 자르기
-							String addSplit2= str.split(" ")[1];
+							str = (String)DEFobject.get("name");
+							String str2 = (String)DEFobject.get("inventory");
+							
+							
+							String str3 = (String)DEFobject.get("addr");
+							// String str3 = str3.split(" ")[0]; //array인덱스 자르기
+							String str4 = (String)DEFobject.get("price");
+							String str5 = (String)DEFobject.get("regDt");
+							String str6 = (String)DEFobject.get("lat");
+							String str7 = (String)DEFobject.get("lng");
+							String str8= (String)DEFobject.get("tel");
+							String str9= (String)DEFobject.get("openTime");
+							
+							
+							
+							Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
+							
+							String[] stt = db2.getAddr().split(" ");
+							
+							try{
+								
+								
+								if(stt[0].matches(".*" +keyword+ ".*") || stt[1].matches(".*" +keyword+ ".*")){
+									a1.add(db2);
+								}
+								
+							}catch(Exception e){
+								
+							}
+							
+							
+						}
+						
+						//위에 전역변수로 설정이 되어있으니까 새로 변수로 다시값을 바꿔주기
+						//총 게시물 수
+				 		lr = a1.size();
+				 		//System.out.print(lastrow);
+				 		//화면당 표시할 게시물 수
+				 		ls = 10;
+				 		//마지막 페이지
+				 		lp = 0;
+				 		//System.out.println(lastpage);
+
+				 		cp = Integer.parseInt(pagenum);
+				 		//System.out.print(currentpage);
+						sr = (cp-1)*ls;
+						//System.out.print(startrow);
+						er = cp*ls;
+						System.out.println(lr);
+					
+						if( lr % ls == 0 ){		// 만약에 총게시물/페이지당게시물 나머지가 없으면
+				 			lp = lr / ls;		// * 총게시물/페이당게시물 
+						}else{
+							lp = lr / ls+1;	// * 총게시물/페이당게시물+1
+						}
+						
+						//시작점          총게시물수
+					 for(int i=sr+1; i < er; i++){
+							/* JSONObject DEFobject = (JSONObject) DEFArray.get(i);
+							
+							str = (String)DEFobject.get("name");
+							String str2 = (String)DEFobject.get("inventory");
+							String str3= (String)DEFobject.get("addr");
+							String str4 = (String)DEFobject.get("price");
+							String str5 = (String)DEFobject.get("regDt");
+							String str6 = (String)DEFobject.get("lat");
+							String str7 = (String)DEFobject.get("lng");
+							String str8= (String)DEFobject.get("tel");
+							String str9= (String)DEFobject.get("openTime");
+							
+							Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9); */
+							
+							//String addSplit1= str.split(" ")[0]; //array인덱스 자르기
+							//String addSplit2= str.split(" ")[1];
 							//System.out.println("addSplit1 : " + addSplit1);
 							//System.out.println("addSplit2 : " + addSplit2);
 							//addSplit1 : 경기
 							//addSplit2 : 안성시
-							if(addSplit1.contains(keyword)){
+							
 								
-								String aaa = String.valueOf(keyword);
+								//char qq = addSplit1.charAt(0);
+								//char qq2 = addSplit2.charAt(0);
+								//System.out.println("qq : " + qq + " qq2 :" + qq2);
+							 	/* String aaa = String.valueOf(keyword);
 								System.out.println("aaa :"+ aaa);
 								aa[i] = aaa;
-								System.out.println(String.valueOf(aa[i]));
+								System.out.println(String.valueOf(aa[i]));  */
 								
-							%>
-								<tbody id="page">
-									<tr>
-										<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
-										<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
-										&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>"><%=DEFobject.get("name") %></a></td>
-										<td id="addr"><%=DEFobject.get("addr") %></td>
-										<td><%=DEFobject.get("price") %></td>
-										<td><%=DEFobject.get("tel") %></td>
-										<td><%=DEFobject.get("inventory") %></td>
-									</tr>
-								</tbody>
-							<%
+									//System.out.println("a1 : " + a1.get(u));
+									
+									%>
+									 <tbody id="page">
+										<tr>
+											<td><a href="DEFdetail.jsp?name=<%=a1.get(i).getName()%>&addr=<%=a1.get(i).getAddr()%>&price=<%=a1.get(i).getPrice()%>&tel=
+											<%=a1.get(i).getTel()%>&inventory=<%=a1.get(i).getInventory()%>&openTime=<%=a1.get(i).getOpenTime()%>&regDt=<%=a1.get(i).getRegDt()%>
+											&lat=<%=a1.get(i).getAddr()%>&lng=<%=a1.get(i).getAddr()%>"><%=a1.get(i).getName() %></a></td>
+											<td id="addr"><%=a1.get(i).getAddr() %></td>
+											<td><%=a1.get(i).getPrice() %></td>
+											<td><%=a1.get(i).getTel() %></td>
+											<td><%=a1.get(i).getInventory() %></td>
+										</tr>
+									</tbody>  
+								<%
+								
+							
+							
 							}
 					}
 			%>
+						<%
+				 		//총 게시물 수
+				 		lastrow = lr;
+				 		//System.out.print(lastrow);
+				 		//화면당 표시할 게시물 수
+				 		listsize = ls;
+				 		//마지막 페이지
+				 		
+				 		
+						lastpage = lp;
+				 		currentpage = cp;
+				 		//System.out.print(currentpage);
+						startrow = sr;
+						//System.out.print(startrow);
+						endrow = er;
+							
+						/* System.out.println("ddddf");
+						System.out.println(lastrow);
+						System.out.println(listsize);
+						System.out.println(lastpage);
+						System.out.println(currentpage);
+						System.out.println(startrow);
+						System.out.println(endrow); */
 						
+						
+						%>
+						
+			 
 						
 			
-			<% }  %>
 			
 		</table>
 		<!-- 페이징 -->
