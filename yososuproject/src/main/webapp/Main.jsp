@@ -116,12 +116,16 @@
 							str = (String)DEFobject.get("addr");
 							String addSplit1= str.split(" ")[0]; //array인덱스 자르기
 							String addSplit2= str.split(" ")[1];
-							if(addSplit1.equals(keyword) || addSplit2.equals(keyword)){
+							//System.out.println("addSplit1 : " + addSplit1);
+							//System.out.println("addSplit2 : " + addSplit2);
+							//addSplit1 : 경기
+							//addSplit2 : 안성시
+							if(addSplit1.contains(keyword)){
 								
 								String aaa = String.valueOf(keyword);
-								System.out.println(aaa);
+								System.out.println("aaa :"+ aaa);
 								aa[i] = aaa;
-								System.out.println(aa[i]);
+								System.out.println(String.valueOf(aa[i]));
 								
 							%>
 								<tbody id="page">
