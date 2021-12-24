@@ -57,16 +57,9 @@
 			 JSONParser jsonParser = new JSONParser();
 			 JSONObject jsonObject = (JSONObject) jsonParser.parse(rs);
 			 JSONArray DEFArray = (JSONArray) jsonObject.get("data");
-			 //System.out.print(jsonObject.get("data"));
-			
-			
-							
-							
-			// for(int j=0; j<json2.size(); j++){
-			 //}
-				
-		 		//System.out.println(jsonObject.get("totalCount"));
-		 		s = String.valueOf(jsonObject.get("totalCount"));	
+		 		
+			 	s = String.valueOf(jsonObject.get("totalCount"));
+			 	System.out.println(s );
 		 		//총 게시물 수
 		 		int lastrow = Integer.parseInt(s);
 		 		//System.out.print(lastrow);
@@ -80,6 +73,8 @@
 				}else{
 					lastpage = lastrow / listsize+1;	// * 총게시물/페이당게시물+1
 				}
+		 		
+		 		System.out.println( lastpage );
 		 		int currentpage = Integer.parseInt(pagenum);
 		 		//System.out.print(currentpage);
 				int startrow = (currentpage-1)*listsize;
@@ -92,9 +87,9 @@
 		 		int ls = 0;
 		 		//마지막 페이지
 		 		int lp = 0;
-		 		
+		 		//총 게시물 수
 		 		int lr = 0;
-		 		
+		 		//현재 페이지
 		 		int cp = 0;
 		 		//System.out.print(currentpage);
 				int sr = 0;
@@ -118,6 +113,7 @@
 						//input type hidden???
 								//DEFdetail에 넘겨지는 값들
 				if( keyword == null ){ // 검색이 안되면
+					System.out.print("asdasd");
 				for(int i=startrow+1; i < endrow; i++){
 					JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
 					<tbody id="page">
@@ -163,9 +159,7 @@
 									a1.add(db2);
 								}
 								
-							}catch(Exception e){
-								
-							}
+							}catch(Exception e){}
 							
 							
 						}
@@ -175,7 +169,7 @@
 				 		lr = a1.size();
 				 		//System.out.print(lastrow);
 				 		//화면당 표시할 게시물 수
-				 		ls = 10;
+				 		ls = 30;
 				 		//마지막 페이지
 				 		lp = 0;
 				 		//System.out.println(lastpage);
@@ -194,89 +188,39 @@
 						}
 						
 						//시작점          총게시물수
-					 for(int i=sr+1; i < er; i++){
-							/* JSONObject DEFobject = (JSONObject) DEFArray.get(i);
-							
-							str = (String)DEFobject.get("name");
-							String str2 = (String)DEFobject.get("inventory");
-							String str3= (String)DEFobject.get("addr");
-							String str4 = (String)DEFobject.get("price");
-							String str5 = (String)DEFobject.get("regDt");
-							String str6 = (String)DEFobject.get("lat");
-							String str7 = (String)DEFobject.get("lng");
-							String str8= (String)DEFobject.get("tel");
-							String str9= (String)DEFobject.get("openTime");
-							
-							Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9); */
-							
-							//String addSplit1= str.split(" ")[0]; //array인덱스 자르기
-							//String addSplit2= str.split(" ")[1];
-							//System.out.println("addSplit1 : " + addSplit1);
-							//System.out.println("addSplit2 : " + addSplit2);
-							//addSplit1 : 경기
-							//addSplit2 : 안성시
-							
-								
-								//char qq = addSplit1.charAt(0);
-								//char qq2 = addSplit2.charAt(0);
-								//System.out.println("qq : " + qq + " qq2 :" + qq2);
-							 	/* String aaa = String.valueOf(keyword);
-								System.out.println("aaa :"+ aaa);
-								aa[i] = aaa;
-								System.out.println(String.valueOf(aa[i]));  */
-								
-									//System.out.println("a1 : " + a1.get(u));
-									
-									%>
-									 <tbody id="page">
-										<tr>
-											<td><a href="DEFdetail.jsp?name=<%=a1.get(i).getName()%>&addr=<%=a1.get(i).getAddr()%>&price=<%=a1.get(i).getPrice()%>&tel=
-											<%=a1.get(i).getTel()%>&inventory=<%=a1.get(i).getInventory()%>&openTime=<%=a1.get(i).getOpenTime()%>&regDt=<%=a1.get(i).getRegDt()%>
-											&lat=<%=a1.get(i).getAddr()%>&lng=<%=a1.get(i).getAddr()%>"><%=a1.get(i).getName() %></a></td>
-											<td id="addr"><%=a1.get(i).getAddr() %></td>
-											<td><%=a1.get(i).getPrice() %></td>
-											<td><%=a1.get(i).getTel() %></td>
-											<td><%=a1.get(i).getInventory() %></td>
-										</tr>
-									</tbody>  
-								<%
-								
-							
-							
-							}
-					}
-			%>
+					 for(int i=sr; i < er; i++){
+							%>
+							 <tbody id="page">
+								<tr>
+									<td><a href="DEFdetail.jsp?name=<%=a1.get(i).getName()%>&addr=<%=a1.get(i).getAddr()%>&price=<%=a1.get(i).getPrice()%>&tel=
+									<%=a1.get(i).getTel()%>&inventory=<%=a1.get(i).getInventory()%>&openTime=<%=a1.get(i).getOpenTime()%>&regDt=<%=a1.get(i).getRegDt()%>
+									&lat=<%=a1.get(i).getAddr()%>&lng=<%=a1.get(i).getAddr()%>"><%=a1.get(i).getName() %></a></td>
+									<td id="addr"><%=a1.get(i).getAddr() %></td>
+									<td><%=a1.get(i).getPrice() %></td>
+									<td><%=a1.get(i).getTel() %></td>
+									<td><%=a1.get(i).getInventory() %></td>
+								</tr>
+							</tbody>  
 						<%
-				 		//총 게시물 수
+							
+					}
+							//총 게시물 수
 				 		lastrow = lr;
 				 		//System.out.print(lastrow);
 				 		//화면당 표시할 게시물 수
 				 		listsize = ls;
 				 		//마지막 페이지
 				 		
-				 		
 						lastpage = lp;
+						System.out.print("마지막페이지:"+lastpage);
 				 		currentpage = cp;
-				 		//System.out.print(currentpage);
+				 		System.out.print(currentpage);
 						startrow = sr;
-						//System.out.print(startrow);
+						System.out.print(startrow);
 						endrow = er;
-							
-						/* System.out.println("ddddf");
-						System.out.println(lastrow);
-						System.out.println(listsize);
-						System.out.println(lastpage);
-						System.out.println(currentpage);
-						System.out.println(startrow);
-						System.out.println(endrow); */
+					}
+			%>
 						
-						
-						%>
-						
-			 
-						
-			
-			
 		</table>
 		<!-- 페이징 -->
 			<div class="row">
@@ -308,9 +252,9 @@
 							<!-- 마지막페이지에서 다음버튼 눌렀을때 마지막 페이지 고정 -->
 						<% if( currentpage == lastpage ){%>	
 						<% if( keyword == null ){ %>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage%>" class="page-link"> 다음 </a> </li>
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1%>" class="page-link"> 다음 </a> </li>
 							<%}else{%>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage%>&keyword=<%=keyword %>" class="page-link"> 다음 </a> </li>	
+							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1%>&keyword=<%=keyword %>" class="page-link"> 다음 </a> </li>	
 							<%} %>
 						<%}else{ %>
 							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword %>" class="page-link">다음 </a> </li>

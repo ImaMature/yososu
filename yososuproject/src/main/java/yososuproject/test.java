@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
+import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,6 +14,9 @@ import org.json.simple.parser.JSONParser;
 public class test {
 
 	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(); 
+	
 		try {
 
     		URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page=1&perPage=1000&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
@@ -31,7 +35,7 @@ public class test {
     		//System.out.println( personArray );
     		
     	
-    			System.out.println("지역을 입력해주세요."); String address = .sc.next();
+    			System.out.println("지역을 입력해주세요."); String address = sc.next();
     			
     			//필요한건 주소 (addr), 상호명(name), 가격(price), 전화번호(tel), 재고량(inventory)
     			for(int i=0; i < DEFArray.size(); i++) { 
@@ -65,5 +69,7 @@ public class test {
     	    		}
         		}
         		bf.close();
+		
+		}	
 	}
-
+}
