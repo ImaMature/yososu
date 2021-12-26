@@ -42,7 +42,7 @@
 		int k =0;
 		int j =2000;		
 		
-		 List<DateItem> dateList = new ArrayList<>();
+		// List<DateItem> dateList = new ArrayList<>();
 		 	
 			 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+j+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 			 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
@@ -75,8 +75,10 @@
 		 		//System.out.print(currentpage);
 				int startrow = (currentpage-1)*listsize;
 				//System.out.print(startrow);
+				//마지막 페이지
 				int endrow = currentpage*listsize;
 		%>
+		<!-- 요소수 상세정보 페이지 -->
 		<form action="DEFdetail.jsp">
 			<table class="table mt-3">
 				<thead class="thead-dark">
@@ -89,25 +91,25 @@
 					</tr>
 				</thead>
 			<%
-				//a태그로 상세정보로 이동할때, 많은 값들을 전달해야하는데 어떻게 해야하는지...form submit?
-						//그냥 밑에 처럼 a태그로 넘기면 해당 정보가 인터넷 주소창에 표시가됩니다. 구글링을 하면 get방식은 위험하고 post방식을 이용해야 된다고 합니다. form을 써서 넘기고 싶은데 a태그는 value가 지정되지 않습니다.
-						//input type hidden???
-								//DEFdetail에 넘겨지는 값들
+				
+				//DEFdetail에 넘겨지는 값들
 				if( keyword == null ){ // 검색이 안되면
-				for(int i=startrow+1; i < endrow; i++){
-					JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
-					<tbody id="page">
-						<tr>
-							<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
-							<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
-							&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>"><%=DEFobject.get("name") %></a></td>
-							<td id="addr"><%=DEFobject.get("addr") %></td>
-							<td><%=DEFobject.get("price") %></td>
-							<td><%=DEFobject.get("tel") %></td>
-							<td><%=DEFobject.get("inventory") %></td>
-						</tr>
-					</tbody>
-			<%	} } else{ // 검색을 하면
+					for(int i=startrow+1; i < endrow; i++){
+						JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
+						<tbody id="page">
+							<tr>
+								<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
+								<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
+								&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>"><%=DEFobject.get("name") %></a></td>
+								<td id="addr"><%=DEFobject.get("addr") %></td>
+								<td><%=DEFobject.get("price") %></td>
+								<td><%=DEFobject.get("tel") %></td>
+								<td><%=DEFobject.get("inventory") %></td>
+							</tr>
+						</tbody>
+				<%	}//for문 끝
+					
+				} else{ // 검색을 하면
 					String str = "";
 					
 					 for(int i=startrow+1; i < endrow; i++){
@@ -116,14 +118,14 @@
 							str = (String)DEFobject.get("addr");
 							String addSplit1= str.split(" ")[0]; //array인덱스 자르기
 							String addSplit2= str.split(" ")[1];
-							if(addSplit1.equals(keyword) || addSplit2.equals(keyword)){
+							if(addSplit1.equals(keyword) || addSplit2.contains(keyword)){
 								
 								String aaa = String.valueOf(keyword);
 								System.out.println(aaa);
 								aa[i] = aaa;
 								System.out.println(aa[i]);
 								
-							%>
+				%>
 								<tbody id="page">
 									<tr>
 										<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
@@ -136,15 +138,15 @@
 									</tr>
 								</tbody>
 							<%
-							}
-					}
-			%>
+							}//if문 끝
+					}//for문 끝
+					%>
 						
 						
 			
-			<% }  %>
+			<% }//else 끝  %>
 			
-		</table>
+		</table> <!-- 테이블 끝 -->
 		<!-- 페이징 -->
 			<div class="row">
 				<div class="col-md-10 offset-2 justify-content-center my-3">
@@ -185,7 +187,7 @@
 					
 					</ul>
 				</div>
-			</div>	
+			</div> <!-- 테이블 끝 -->	
 		</form>
 	</div>
 	<%@include file="footer.jsp" %>
