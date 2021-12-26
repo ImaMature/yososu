@@ -20,6 +20,9 @@
 
 	<%@include file="header.jsp" %>
 	
+	
+	
+	
 	<%
 		String keyword = request.getParameter("keyword");
 		String pagenum = request.getParameter("pagenum");
