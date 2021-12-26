@@ -24,7 +24,9 @@
 		String lat = request.getParameter("lat");
 		String lng = request.getParameter("lng");
 		String tel = request.getParameter("tel");
-		System.out.println("lng : " + lng + " lat : " + lat);
+		String totalcount = request.getParameter("totalcount");
+		
+		System.out.println("lng : " + lng + " lat : " + lat +" totalcount : "+totalcount);
 	%>
 
 	<div class="container">
@@ -53,9 +55,12 @@
 				</tr>
 			</thead>
 		</table>
+			<button class="btn btn-outline-dark" id="findnearbtn">근처 요소수 주유소 찾기</button>
+			<button class="btn btn-outline-dark" id="currentbtn">현재 주유소 정보</button>
 		
 		<input type="hidden" id="lat" value="<%=lat%>">
 		<input type="hidden" id="lng" value="<%=lng%>">
+		<input type="hidden" id="totalcount2" value="<%=totalcount%>">
 	</div>
 </body>
 </html>
