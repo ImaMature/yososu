@@ -33,10 +33,12 @@
 		String s= "";
 		String [] aa = new String [1024];
 		ArrayList<Databases> a1 = new ArrayList<>();
-		ArrayList<Databases> a2 = new ArrayList<>();
+				
 		Databases db = new Databases();
 		
 	%>
+	<%!public static ArrayList<Databases> a2 = new ArrayList<>();%>
+	
 	
 	<div class="container">
 		<form class="row col-md-6 offset-3" style="text-align: center;" action="Main.jsp" method="get">
@@ -146,9 +148,10 @@
 							String str8= (String)DEFobject.get("tel");
 							String str9= (String)DEFobject.get("openTime");
 							
-							
+						
 							
 							Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
+							a2.add(db2);
 							
 							String[] stt = db2.getAddr().split(" ");
 							

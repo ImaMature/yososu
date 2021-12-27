@@ -1,10 +1,17 @@
+<%@page import="yososuproject.Databases"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 //객체로 담아서 해당 반경의 주유소 찾기
-int lat = Integer.parseInt(request.getParameter("lat")); //경도
-int lon = Integer.parseInt(request.getParameter("lon")); //위도
+int lat = Integer.parseInt(request.getParameter("lat3")); //경도
+int lon = Integer.parseInt(request.getParameter("lon3")); //위도
 
 
+%>
+<%!public static ArrayList<Databases> a2;%>
+<%
+for(Databases temp : a2){
+	System.out.print(temp.getAddr());
+}
 %>

@@ -87,7 +87,7 @@ $(document).ready( function(){
 					 $.ajax({
 						
 						url: "apicontroller.jsp" ,
-						data:{ lat : lat2 , lon : lon2 } , 
+						data:{ lat3 : lat2 , lon3 : lon2 } , 
 						success : function(result){
 							
 						}
