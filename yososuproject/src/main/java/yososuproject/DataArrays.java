@@ -37,19 +37,19 @@ public class DataArrays {
 				 String lat = (String)DEFobject.get("lat");
 				 String lng = (String)DEFobject.get("lng");
 				 String name = (String)DEFobject.get("name");
-				 
 				 Databases databases2 = new Databases(lat, lng, name);
 				 a2.add(databases2);
-				 
 			 } 
+			 return a2;
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 		 
 			 
 			 //System.out.print("lng : " + lng + " lat : " + lat +" name : " +name);
 			 
-		return a2;
+		
 	}
 }

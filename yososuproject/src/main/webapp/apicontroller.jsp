@@ -14,20 +14,20 @@
    
 <%
 
-DataArrays.getArrayList();
-
 
 //객체로 담아서 해당 반경의 주유소 찾기
 double lat = Double.parseDouble(request.getParameter("lat4")); //경도
 double lon = Double.parseDouble(request.getParameter("lon4")); //위도
-System.out.print("lat : "+lat);
-System.out.print("lon : "+lon);
+System.out.print("lataaa : "+lat);
+System.out.print("lonaaa : "+lon);
 
-ArrayList<Databases> a1 = new ArrayList<>();
+ArrayList<Databases> arr = new ArrayList<>();
 
-for(int i =0; i<a1.size();i++){
-	
-	System.out.print("getLat : "+a1.get(i).getLat());
+System.out.print( DataArrays.parselist());
+System.out.print( DataArrays.getArrayList());
+
+for(int i =0; i<arr.size();i++){
+	System.out.print("getLat : "+arr.get(i).getLat());
 }
 /* for(int i =0; i<a2.size(); i++){
 	System.out.print(a2.get(i).addr);

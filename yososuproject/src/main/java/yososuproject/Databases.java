@@ -2,15 +2,15 @@ package yososuproject;
 
 public class Databases {
 
-	public String name;
-	public String inventory;
-	public String addr;
-	public String price;
-	public String regDt;
-	public String lat;
-	public String lng;
-	public String tel;
-	public String openTime;
+	private String name;
+	private String inventory;
+	private String addr;
+	private String price;
+	private String regDt;
+	private String lat;
+	private String lng;
+	private String tel;
+	private String openTime;
 	
 	public Databases() {
 		
