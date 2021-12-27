@@ -23,6 +23,8 @@ public class DataArrays {
 	
 	 //List<DateItem> dateList = new ArrayList<>();
 	 	
+	
+	
 		try {
 			URL url;
 			url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+j+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
