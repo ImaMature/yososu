@@ -29,10 +29,10 @@ function search(){
 $(document).ready( function(){ 
 	//alert("실행");
 	
-	//var lat = document.getElementById("lat").value;
+	var lat = document.getElementById("lat").value;
 	//alert(lat);
-	//var lng = document.getElementById("lng").value;
-	var lng = 129.19361230; var lat =35.81250810;
+	var lng = document.getElementById("lng").value;
+	//var lng = 129.19361230; var lat =35.81250810;
 	//alert(lng);
 	//총 요소수 주유소 개수
 	var totalcount2 = document.getElementById('totalcount2').value+0;
@@ -78,20 +78,21 @@ $(document).ready( function(){
 		        
 		        var lat2 = position.coords.latitude, // 위도
 		            lon2 = position.coords.longitude; // 경도
+					alert("lat2 : "+ lat2 + " lon2 : " + lon2);
 		        var locPosition = new kakao.maps.LatLng(lat2, lon2), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 		            message = '<div class="text-center" style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
 		        
-		        // 마커와 인포윈도우를 표시합니다
-		        displayMarker(locPosition, message);
-
 					 $.ajax({
 						
 						url: "apicontroller.jsp" ,
-						data:{ lat3 : lat2 , lon3 : lon2 } , 
+						data:{ lat4 : lat2 , lon4 : lon2 } , 
 						success : function(result){
 							
 						}
 					});
+		        // 마커와 인포윈도우를 표시합니다
+		        displayMarker(locPosition, message);
+
 		            
 		      });
 		    

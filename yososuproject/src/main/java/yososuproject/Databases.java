@@ -18,7 +18,6 @@ public class Databases {
 	
 	public Databases(String name, String inventory, String addr, String price, String regDt, String lat, String lng,
 			String tel, String openTime) {
-		super();
 		this.name = name;
 		this.inventory = inventory;
 		this.addr = addr;
@@ -28,6 +27,13 @@ public class Databases {
 		this.lng = lng;
 		this.tel = tel;
 		this.openTime = openTime;
+	}
+	
+
+	public Databases(String name, String lat, String lng) {
+		this.name = name;
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public String getName() {
