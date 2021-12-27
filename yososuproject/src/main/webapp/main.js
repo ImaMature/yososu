@@ -83,6 +83,15 @@ $(document).ready( function(){
 		        
 		        // 마커와 인포윈도우를 표시합니다
 		        displayMarker(locPosition, message);
+
+					 $.ajax({
+						
+						url: "apicontroller.jsp" ,
+						data:{ lat : lat2 , lon : lon2 } , 
+						success : function(result){
+							
+						}
+					});
 		            
 		      });
 		    
@@ -119,7 +128,7 @@ $(document).ready( function(){
 		    map2.setCenter(locPosition);  
 		} //근처 주유소 찾기 end(그러나 현재 내 위치만 나옴)   
 		
-		/*//경도 위도 +0.1 -0.1 만큼 범위의 주유소 찾기
+		//경도 위도 +0.1 -0.1 만큼 범위의 주유소 찾기
 			var c_lat = lat2+0.1; // 현재 위도 + 0.1
 			var c_lng = lon2+0.1; // 현재 경도 + 0.1
 			var c_lat2 = lat2-0.1; // 현재 위도 - 0.1
@@ -158,7 +167,7 @@ $(document).ready( function(){
 					    map.setBounds(bounds);
 					}
 				}
-			}*/
+			}
 		
 		//d = acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(lon1-lon2))
 	

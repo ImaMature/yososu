@@ -14,7 +14,6 @@
 <body>
 	<%@include file="header.jsp" %>
 	<%
-		
 		String name = request.getParameter("name");
 		String addr = request.getParameter("addr");
 		String price = request.getParameter("price");
@@ -30,6 +29,7 @@
 	%>
 
 	<div class="container">
+	
 		<h3>상세 정보</h3>
 		<table class="table">
 			<thead class="thead-dark">
