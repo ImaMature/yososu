@@ -11,13 +11,26 @@ public class Databases {
 	private String lng;
 	private String tel;
 	private String openTime;
+	private double distance; 
 	
 	public Databases() {
 		
 	}
 	
+	//이름하고 거리 담기 //이름으로 비교
+	public Databases(String name, double distance) {
+		super();
+		this.name = name;
+		this.distance = distance;
+	}
+
+	//두 arraylist 비교해서 3번째 arraylist arr3에 담을 필드
+	
+	
+
+
 	public Databases(String name, String inventory, String addr, String price, String regDt, String lat, String lng,
-			String tel, String openTime) {
+			String tel, String openTime, double distance) {
 		this.name = name;
 		this.inventory = inventory;
 		this.addr = addr;
@@ -27,14 +40,17 @@ public class Databases {
 		this.lng = lng;
 		this.tel = tel;
 		this.openTime = openTime;
+		this.distance = distance;
 	}
 	
-
+	//
 	public Databases(String name, String lat, String lng) {
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 	}
+	
+	
 
 	public String getName() {
 		return name;
@@ -108,6 +124,16 @@ public class Databases {
 		this.openTime = openTime;
 	}
 	
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	
+	
+
 	
 	
 	

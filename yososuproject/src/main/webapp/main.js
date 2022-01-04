@@ -25,7 +25,8 @@ function search(){
 			});
 }*/
 
-//지도(카카오api)		
+//지도(카카오api)	
+//현재 주유소 정보 지도 start	
 $(document).ready( function(){ 
 	//alert("실행");
 	
@@ -34,8 +35,7 @@ $(document).ready( function(){
 	var lng = document.getElementById("lng").value;
 	//var lng = 129.19361230; var lat =35.81250810;
 	//alert(lng);
-	//총 요소수 주유소 개수
-	var totalcount2 = document.getElementById('totalcount2').value+0;
+	
 	var container = document.getElementById('map');
 	var options = {
 		center: new kakao.maps.LatLng(lat, lng),
@@ -58,7 +58,12 @@ $(document).ready( function(){
 	    // 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다 
 	    // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
 	}
-	//근처 주유소 찾기
+	//현재 주유소 정보 지도 end
+	
+	
+	
+	
+	//근처 주유소 찾기 start
 	$("#findnearbtn").click(function(){
 		
 		kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
@@ -87,13 +92,32 @@ $(document).ready( function(){
 						url: "apicontroller.jsp" ,
 						data:{ lat4 : lat2 , lon4 : lon2 } , 
 						success : function(result){
+							// controller에서 값이 넘어오면 values에 리스트를 저장 --> values는 리스트 값 each문은 반복
+							if(result.code == "OK") { //controller에서 넘겨준 성공여부 코드
+                    
+			                    values = result.arrr ; //java에서 정의한 ArrayList명을 적어준다.
+			                    //for(Array arrays: Arrays) 
+			                    $.each(values, function( index, value ) { // 반복문 [주소, 실제 값]
+			                       console.log( index + " : " + value.name ); //arr.java 의 변수명을 써주면 된다.
+			                    });
+			                    
+			                    alert("성공");
+			                }
+							var positions = [result]
 							
+							for (var i = 0; i < positions.length; i ++) {
+								
+								var marker = new kakao.maps.Marker({
+							        map: map, // 마커를 표시할 지도
+							        position: positions[i].latlng, // 마커를 표시할 위치
+							        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+							    });
+							}
 						}
 					});
+					
 		        // 마커와 인포윈도우를 표시합니다
 		        displayMarker(locPosition, message);
-
-		            
 		      });
 		    
 		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -128,51 +152,10 @@ $(document).ready( function(){
 		    // 지도 중심좌표를 접속위치로 변경합니다
 		    map2.setCenter(locPosition);  
 		} //근처 주유소 찾기 end(그러나 현재 내 위치만 나옴)   
-		
-		//경도 위도 +0.1 -0.1 만큼 범위의 주유소 찾기
-			var c_lat = lat2+0.1; // 현재 위도 + 0.1
-			var c_lng = lon2+0.1; // 현재 경도 + 0.1
-			var c_lat2 = lat2-0.1; // 현재 위도 - 0.1
-			var c_lng2 = lon2-0.1; // 현재 경도 - 0.1
-        
-        	//요소수 주유소의 개수 만큼 for 문 돌려서
-        	for(i =0; i<totalcount2; i++){
-				//현재위도와 경도가 각각 +0.1, -0.1한 거보다 크거나 작다면
-				if(lat>c_lat && lng>c_lng || lat<c_lat2 && lng<c_lng2){
-					//안의 내용 버리기
-					flush();
-				}else{//아니라면
-					// 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다 
-					var points = [
-					    new kakao.maps.LatLng(33.452278, 126.567803),
-					    new kakao.maps.LatLng(33.452671, 126.574792),
-					    new kakao.maps.LatLng(33.451744, 126.572441)
-					];
-					
-					// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-					var bounds = new kakao.maps.LatLngBounds();    
-					
-					var j, marker;
-					for (j = 0; j < points.length; j++) {
-					    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-					    marker =     new kakao.maps.Marker({ position : points[j] });
-					    marker.setMap(map);
-					    
-					    // LatLngBounds 객체에 좌표를 추가합니다
-					    bounds.extend(points[j]);
-					}
-					
-					function setBounds() {
-					    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-					    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
-					    map.setBounds(bounds);
-					}
-				}
-			}
-		
-		//d = acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(lon1-lon2))
-	
 	});
+	//근처 주유소 찾기 end
+	
+	
 	
 	//현재 주유소 표시하기
 	$("#currentbtn").click(function(){
