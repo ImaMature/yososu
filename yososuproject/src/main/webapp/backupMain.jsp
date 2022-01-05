@@ -81,6 +81,7 @@
 				//마지막 페이지
 				int endrow = currentpage*listsize;
 		%>
+		
 		<!-- 요소수 상세정보 페이지 -->
 		<form action="DEFdetail.jsp">
 			<table class="table mt-3">
@@ -124,9 +125,9 @@
 							if(addSplit1.equals(keyword) || addSplit2.contains(keyword)){
 								
 								String aaa = String.valueOf(keyword);
-								System.out.println(aaa);
+								//System.out.println(aaa);
 								aa[i] = aaa;
-								System.out.println(aa[i]);
+								//System.out.println(aa[i]);
 								
 				%>
 								<tbody id="page">

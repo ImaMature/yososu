@@ -149,11 +149,7 @@
 							String str8= (String)DEFobject.get("tel");
 							String str9= (String)DEFobject.get("openTime");
 							
-						
-							
 							Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
-							
-							
 							
 							String[] stt = db2.getAddr().split(" ");
 							

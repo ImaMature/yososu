@@ -1,5 +1,8 @@
 package yososuproject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Databases {
 
 	private String name;
@@ -13,14 +16,16 @@ public class Databases {
 	private String openTime;
 	private double distance; 
 	
+	public ArrayList<Databases> DataArray = new ArrayList<>();
+	
 	public Databases() {
 		
 	}
 	
 	//이름하고 거리 담기 //이름으로 비교
-	public Databases(String name, double distance) {
+	public Databases(String addr, double distance) {
 		super();
-		this.name = name;
+		this.addr = addr;
 		this.distance = distance;
 	}
 
@@ -28,7 +33,7 @@ public class Databases {
 	
 	
 
-
+	//메인 파싱용
 	public Databases(String name, String inventory, String addr, String price, String regDt, String lat, String lng,
 			String tel, String openTime, double distance) {
 		this.name = name;
@@ -43,14 +48,55 @@ public class Databases {
 		this.distance = distance;
 	}
 	
-	//
-	public Databases(String name, String lat, String lng) {
+	public Databases(String name, String inventory, String addr, String price, String regDt, String lat, String lng,
+			String tel, String openTime) {
+		this.name = name;
+		this.inventory = inventory;
+		this.addr = addr;
+		this.price = price;
+		this.regDt = regDt;
+		this.lat = lat;
+		this.lng = lng;
+		this.tel = tel;
+		this.openTime = openTime;
+	}
+	
+	
+	public Databases(String name, String lat, String lng  ) {
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 	}
 	
 	
+	//js에 넘겨주기용
+	public Databases(String name, String inventory, String addr, String price, String lat, String lng, String tel,
+			String openTime, double distance) {
+		super();
+		this.name = name;
+		this.inventory = inventory;
+		this.addr = addr;
+		this.price = price;
+		this.lat = lat;
+		this.lng = lng;
+		this.tel = tel;
+		this.openTime = openTime;
+		this.distance = distance;
+	}
+	
+	//새로운 파싱용
+	public Databases(String name, String inventory, String addr, String price, String lat, String lng, String tel,
+			String openTime) {
+		super();
+		this.name = name;
+		this.inventory = inventory;
+		this.addr = addr;
+		this.price = price;
+		this.lat = lat;
+		this.lng = lng;
+		this.tel = tel;
+		this.openTime = openTime;
+	}
 
 	public String getName() {
 		return name;
@@ -130,6 +176,15 @@ public class Databases {
 
 	public void setDistance(double distance) {
 		this.distance = distance;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		String aa = builder.append(name+" "+inventory+" "+addr+" "+tel+" "+openTime+"\n").toString();
+		Databases a = new Databases(name, inventory, addr, price, regDt, lat, lng, tel, openTime);
+		DataArray.add(a);
+		return aa;
 	}
 	
 	

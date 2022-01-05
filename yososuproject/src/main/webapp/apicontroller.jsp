@@ -9,9 +9,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    
-   
 <%
 /*다른페이지 
 
@@ -44,36 +41,47 @@ JSONArray DEFArray = (JSONArray) jsonObject.get("data");
 //객체로 담아서 해당 반경의 주유소 찾기
 double lat = Double.parseDouble(request.getParameter("lat4")); //경도
 double lng = Double.parseDouble(request.getParameter("lon4")); //위도
-System.out.print("lataaa : "+lat);
-System.out.print("lonaaa : "+lng);
+System.out.println("js에서 넘어온 현재 경도 : "+lat);
+System.out.println("js에서 넘어온 현재 위도 : "+lng);
 
+//api 파싱한 정보가 담긴 리스트
 ArrayList<Databases> arr = new ArrayList<>();
+//파싱한 사이즈만큼 반복문 돌려서 나온 이름과 거리가 담긴 리스트
 ArrayList<Databases> arr2 = new ArrayList<>();
+//위 두 리스트를 비교해서 값을 담아서 js로 넘겨줄 리스트
 ArrayList<Databases> arr3 = new ArrayList<>();
 
-//경도 위도 다 가져와서 리스트에 담기
+//api 새로 가져와서 리스트에 담기
 for(int i =0; i<DEFArray.size();i++){
 	//System.out.print("getLat : "+arr.get(i).getLat());
 	JSONObject DEFobject = (JSONObject) DEFArray.get(i);
 	String name = (String)DEFobject.get("name");
 	String lat2 = (String)DEFobject.get("lat");
 	String lng2 = (String)DEFobject.get("lng");
-	Databases databases = new Databases(name,lat2,lng2);
+	String addr = (String)DEFobject.get("addr");
+	String openTime = (String)DEFobject.get("openTime");
+	String tel = (String)DEFobject.get("tel");
+	String inventory = (String)DEFobject.get("inventory");
+	String price = (String)DEFobject.get("price");
+	Databases databases = new Databases(name,inventory,addr,price,lat2,lng2,tel,openTime);
+	//이름 위도 경도 담기
 	arr.add(databases);
 }
 
-//위도 경도로 거리 구해서 arraylist에 이름과 거리 담기
+//파싱한 사이즈 만큼 반복문 돌려서 거리 구하기
 for(int u=0; u<arr.size(); u++){
 	
+	//위도 경도로 거리 구해서  arraylist에 이름과 거리 담기
 	double lat2 = Double.parseDouble(arr.get(u).getLat());
 	double lng2 = Double.parseDouble(arr.get(u).getLng());
 	
-	c_lat = lat; // 현재 위도 + 0.1
-	c_lng = lng; // 현재 경도 + 0.1
-	c_lat2 = lat2; // 현재 위도 - 0.1
-	c_lng2 = lng2; // 현재 경도 - 0.1
+	c_lat = lat; // 현재 위도
+	c_lng = lng; // 현재 경도 
+	c_lat2 = lat2; // 모든 위도
+	c_lng2 = lng2; // 모든 경도
 	
-    double distance;
+	
+    double distance; //거리 객체
     double radius = 6371; // 지구 반지름(km)
     double toRadian = Math.PI / 180;
 
@@ -87,31 +95,46 @@ for(int u=0; u<arr.size(); u++){
         Math.cos(c_lat * toRadian) * Math.cos(c_lat2 * toRadian) * sinDeltaLng * sinDeltaLng);
 
     distance = 2 * radius * Math.asin(squareRoot);
-    Databases databases2 = new Databases(arr.get(u).getName(), distance);
+    Databases databases2 = new Databases(arr.get(u).getAddr(), distance);
+    //이름과 거리 리스트에 저장하기
     arr2.add(databases2);
     
 }
 
 //거리 테스트
 for(int uu = 0; uu<arr2.size(); uu++){
-	if(arr2.get(uu).getDistance() < 20){ // 20보다 작은 거리에 있는 리스트들을 출력 
-		System.out.println("arr2 : "+arr2.get(uu).getName());
-		System.out.println("arr2거리 : "+arr2.get(uu).getDistance());		
+	if(arr2.get(uu).getDistance() < 5){ // 5km보다 작은 거리에 있는 리스트들을 출력 
+		//System.out.println("arr2 : "+arr2.get(uu).getName());
+		//System.out.println("arr2거리 : "+arr2.get(uu).getDistance());	
+		//System.out.println("arr2주소 : "+arr2.get(uu).getAddr());
 	}	
 }
-
-//두 arraylist 비교하기
+//두 arraylist 비교해서 값 3번째 arraylist에 담아서 js에 값 넘기기
 for(int y = 0; y<arr.size(); y++){
 	for(int m=0; m<arr2.size(); m++){
-		if(arr.get(y).getName().equals(arr2.get(m).getName()) && arr2.get(m).getDistance() < 20){ //두 arraylist의 이름이 같다면 리스트들을 출력 
-			System.out.println("arr name :" + arr.get(y).getName());
-			System.out.println("arr lat : " + arr.get(y).getLat() + "arr lng : " + arr.get(y).getLng());
-			System.out.println("arr distance :" + arr2.get(m).getDistance());
+		//두 arraylist의 이름이 같고 거리가 5km보다 작다면
+		if(arr.get(y).getAddr().equals(arr2.get(m).getAddr()) && arr2.get(m).getDistance() < 5){ 
+			/*System.out.println("==========================================");
+			System.out.println("arr1 name :" + arr.get(y).getName());
+			System.out.println("arr1 재고 : "+arr.get(y).getInventory());
+			System.out.println("arr2 주소 : "+arr2.get(m).getAddr());
+			System.out.println("arr1 가격 : "+arr.get(y).getPrice());
+			System.out.println("arr1 lat : " + arr.get(y).getLat() + "arr1 lng : " + arr.get(y).getLng());
+			System.out.println("arr1 전화번호 : "+arr.get(y).getTel());
+			System.out.println("arr2 distance :" + arr2.get(m).getDistance()); */
 			
-			Databases databases2 = new Databases(arr.get(y).getName(), arr.get(y).getLat(), arr.get(y).getLng(), arr2.get(m).getDistance());
-			out.print(arr3.add(databases2));
+			Databases databases2 = new Databases(arr.get(y).getName(), 
+												arr.get(y).getInventory(),
+												arr2.get(m).getAddr(),
+												arr.get(y).getPrice(),
+												arr.get(y).getLat(), 
+												arr.get(y).getLng(),
+												arr.get(y).getTel(),
+												arr.get(y).getOpenTime(),
+												arr2.get(m).getDistance());
+			arr3.add(databases2);
 		}
 	}
 }
-
 %>
+<%=arr3%>

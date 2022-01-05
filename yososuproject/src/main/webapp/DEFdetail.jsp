@@ -25,7 +25,7 @@
 		String tel = request.getParameter("tel");
 		String totalcount = request.getParameter("totalcount");
 		
-		System.out.println("lng : " + lng + " lat : " + lat +" totalcount : "+totalcount);
+		//System.out.println("lng : " + lng + " lat : " + lat +" totalcount : "+totalcount);
 	%>
 
 	<div class="container">
