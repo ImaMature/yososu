@@ -21,6 +21,9 @@
 
 	<%@include file="header.jsp" %>
 	
+	<div id="app">
+	  <p>{{ message }}</p>
+	</div>
 	<%
 		
 		String keyword = request.getParameter("keyword");
@@ -42,13 +45,16 @@
 	
 	
 	<div class="container">
-		<form class="row col-md-6 offset-3" style="text-align: center;" action="AppMain.jsp" method="get">
+		<form class="row col-md-6 offset-3" style="text-align: center;" action="Main.jsp" method="get">
 			<input type = "text" class="form-control col-md-10" name = "keyword">
 			<input type = "submit" class="btn btn-outline-dark col-md-2" value="검색">
 		</form>
 		<%
+		
 		int k =0;
 		int j =2000;		
+		
+		 //List<DateItem> dateList = new ArrayList<>();
 		 	
 			 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+j+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 			 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
@@ -74,10 +80,15 @@
 					lastpage = lastrow / listsize+1;	// * 총게시물/페이당게시물+1
 				}
 		 		
+		 		//System.out.println( lastpage );
 		 		int currentpage = Integer.parseInt(pagenum);
+		 		//System.out.print(currentpage);
 				int startrow = (currentpage-1)*listsize;
+				//System.out.print(startrow);
 				int endrow = currentpage*listsize;
 				
+				
+		 		//System.out.print(lastrow);
 		 		//화면당 표시할 게시물 수
 		 		int ls = 0;
 		 		//마지막 페이지
@@ -86,7 +97,9 @@
 		 		int lr = 0;
 		 		//현재 페이지
 		 		int cp = 0;
+		 		//System.out.print(currentpage);
 				int sr = 0;
+				//System.out.print(startrow);
 				int er = 0;
 		%>
 		<form action="DEFdetail.jsp">
@@ -125,33 +138,53 @@
 						
 						for(int i=0; i< Integer.parseInt(s); i++){
 							JSONObject DEFobject = (JSONObject) DEFArray.get(i);
+							
 							str = (String)DEFobject.get("name");
 							String str2 = (String)DEFobject.get("inventory");
+							
+							
 							String str3 = (String)DEFobject.get("addr");
+							// String str3 = str3.split(" ")[0]; //array인덱스 자르기
 							String str4 = (String)DEFobject.get("price");
 							String str5 = (String)DEFobject.get("regDt");
 							String str6 = (String)DEFobject.get("lat");
 							String str7 = (String)DEFobject.get("lng");
 							String str8= (String)DEFobject.get("tel");
 							String str9= (String)DEFobject.get("openTime");
+							
 							Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
+							
 							String[] stt = db2.getAddr().split(" ");
+							
 							try{
+								
+								
 								if(stt[0].matches(".*" +keyword+ ".*") || stt[1].matches(".*" +keyword+ ".*")){
 									a1.add(db2);
 								}
+								
 							}catch(Exception e){}
+							
+							
 						}
+						
 						//위에 전역변수로 설정이 되어있으니까 새로 변수로 다시값을 바꿔주기
 						//총 게시물 수
 				 		lr = a1.size();
+				 		//System.out.print(lastrow);
 				 		//화면당 표시할 게시물 수
 				 		ls = 30;
 				 		//마지막 페이지
 				 		lp = 0;
+				 		//System.out.println(lastpage);
+
 				 		cp = Integer.parseInt(pagenum);
+				 		//System.out.print(currentpage);
 						sr = (cp-1)*ls;
+						//System.out.print(startrow);
 						er = cp*ls;
+						System.out.println(lr);
+					
 						if( lr % ls == 0 ){		// 만약에 총게시물/페이지당게시물 나머지가 없으면
 				 			lp = lr / ls;		// * 총게시물/페이당게시물 
 						}else{

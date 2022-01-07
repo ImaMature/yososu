@@ -89,16 +89,30 @@ $(document).ready( function(){
 					
 		        var locPosition = new kakao.maps.LatLng(lat2, lon2), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 		        message = '<div class="text-center" style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
-		        //result = [];
+				arr = [];
+				arr2 = [];
 					 $.ajax({
 						
 						url: "apicontroller.jsp" ,
 						data:{ lat4 : lat2 , lon4 : lon2 } , 
 						success : function(result){
-							var arr = result ; 
-							alert(arr);
-					        // 마커와 인포윈도우를 표시합니다
-					        //displayMarker(locPosition, message);
+							arr = result.split(",");  //0~8 
+							for(i=0; i<arr.length; i++){
+								arr2[i] = arr[i].split("_");
+							}
+							
+							for(j=0; j<arr2.length; j++){
+								/*alert(arr2[j][0]) // 경도
+								alert(arr2[j][1]) // 위도
+								alert(arr2[j][2]) // 이름 */
+								var locPosition = new kakao.maps.LatLng(arr2[j][0], arr2[j][1])
+								message = '<div class="text-center" style="padding:5px;">'+arr2[j][2]+'<br>'+arr2[j][3]+'<br>'+arr2[j][5]+'</div>';
+					        	displayMarker(locPosition, message);
+								
+								
+							}
+							
+							
 						}
 					});
 					 displayMarker(locPosition, message);
@@ -174,5 +188,6 @@ $(document).ready( function(){
 	});
 });		
 
+	
 	
 		

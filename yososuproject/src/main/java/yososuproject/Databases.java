@@ -181,9 +181,7 @@ public class Databases {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		String aa = builder.append(name+" "+inventory+" "+addr+" "+tel+" "+openTime+"\n").toString();
-		Databases a = new Databases(name, inventory, addr, price, regDt, lat, lng, tel, openTime);
-		DataArray.add(a);
+		String aa = builder.append(lat+"_"+lng+"_"+name+"_"+inventory+"_"+addr+"_"+tel+"_"+openTime).toString();
 		return aa;
 	}
 	
