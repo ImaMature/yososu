@@ -45,11 +45,11 @@
 		Databases db = new Databases();
 	%>
     <body id="page-top">
-        <!-- Navigation-->
+        <!-- 네비바-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">Clarence Taylor</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>
+            <a class="navbar-brand js-scroll-trigger" href="Main.jsp">
+                <span class="d-block d-lg-none">요기래</span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/YOGIRAE-logo-white.png" alt="..." /></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -63,7 +63,8 @@
                 </ul>
             </div>
         </nav>
-        <!-- Page Content-->
+        <!-- 네비바 끝 -->
+        <!-- 페이지 내용들-->
         <div class="container-fluid p-0">
 		<%
 			int k =0;
@@ -106,164 +107,214 @@
 			 		//현재 페이지
 			 		int cp = 0;
 					int sr = 0;
+					//마지막 페이지
 					int er = 0;
 			%>
-            <!-- About-->
-            <section class="resume-section" id="DEFmain">
+            <!-- 메인페이지-->
+            <section class="table-section" id="DEFmain"> <!-- section 시작 -->
             	<div class="col-md-12">
-	                <form class="row col-md-8" style="text-align: center;" action="Main.jsp" method="get">
-	                	<div class="col-md-8">
-							<input type = "text" class="form-control col-md-10" name = "keyword">
-						</div>
-						<div class="col-md-1">
-							<input type = "submit" class="btn btn-outline-dark" value="검색">
-						</div>
-					</form>
-					<form action="DEFdetail.jsp">
-						<table class="table mt-3">
-							<thead class="thead-dark">
-								<tr>
-									<th>상호명</th>
-									<th>주소</th>
-									<th>가격</th>
-									<th>전화번호</th>
-									<th>재고량</th>
-								</tr>
-							</thead>
-						<%
-							//DEFdetail에 넘겨지는 값들
-							if( keyword == null ){ // 검색이 안되면
-								//System.out.print("asdasd");
-							for(int i=startrow+1; i < endrow; i++){
-								JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
-								<tbody id="page">
-									<tr>
-										<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
-										<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
-										&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>&totalcount=<%=lastrow%>"><%=DEFobject.get("name") %></a></td>
-										<td id="addr"><%=DEFobject.get("addr") %></td>
-										<td><%=DEFobject.get("price") %></td>
-										<td><%=DEFobject.get("tel") %></td>
-										<td><%=DEFobject.get("inventory") %></td>
-									</tr>
-								</tbody>
-						<%	} } else{ // 검색을 하면 새로 페이징
-									String str = "";
+	                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+						<div class="card shadow mb-4">
+							<!-- 테이블 헤더 -->
+							<div class="card-header py-3">
+		                        <h5 class="m-0 font-weight-bold text-primary">요소수 주유소 목록</h5>
+		                    </div>
+		                    <!-- card-body 시작 -->
+		                    <div class="card-body">
+			                    <div class="table-responsive">
+			                    	<!-- 검색창 시작 -->
+									<form class="row col-md-8 mx-2 mt-3" style="text-align: center;" action="Main.jsp" method="get">
+						               	<div class="col-md-3">
+											<input type = "text" class="form-control col-md-10" name = "keyword">
+										</div>
+										<div class="col-md-1">
+											<input type = "submit" class="btn btn-primary" style="color: white;" value="검색">
+										</div>
+									</form>
 									
-									for(int i=0; i< Integer.parseInt(s); i++){
-										JSONObject DEFobject = (JSONObject) DEFArray.get(i);
-										str = (String)DEFobject.get("name");
-										System.out.println(String.valueOf(str));
-										String str2 = (String)DEFobject.get("inventory");
-										String str3 = (String)DEFobject.get("addr");
-										String str4 = (String)DEFobject.get("price");
-										String str5 = (String)DEFobject.get("regDt");
-										String str6 = (String)DEFobject.get("lat");
-										String str7 = (String)DEFobject.get("lng");
-										String str8= (String)DEFobject.get("tel");
-										String str9= (String)DEFobject.get("openTime");
-										Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
-										String[] stt = db2.getAddr().split(" ");
-										try{
-											if(stt[0].matches(".*" +keyword+ ".*") || stt[1].matches(".*" +keyword+ ".*")){
-												a1.add(db2);
-											}
-										}catch(Exception e){}
-									}
-									//위에 전역변수로 설정이 되어있으니까 새로 변수로 다시값을 바꿔주기
-									//총 게시물 수
-							 		lr = a1.size();
-							 		//화면당 표시할 게시물 수
-							 		ls = 30;
-							 		//마지막 페이지
-							 		lp = 0;
-							 		cp = Integer.parseInt(pagenum);
-									sr = (cp-1)*ls;
-									er = cp*ls;
-									if( lr % ls == 0 ){		// 만약에 총게시물/페이지당게시물 나머지가 없으면
-							 			lp = lr / ls;		// * 총게시물/페이당게시물 
-									}else{
-										lp = lr / ls+1;	// * 총게시물/페이당게시물+1
-									}
-									
-									//시작점          총게시물수
-								 for(int i=sr; i < er; i++){
+									<!-- 검색창 끝 -->
+									<!-- form 시작 -->
+									<form action="DEFdetail.jsp" class="m-3">
+										<!-- 테이블 시작-->
+										<table class="table table-bordered"  id="dataTable">
+											<thead>
+												<tr>
+													<th>상호명</th>
+													<th>주소</th>
+													<th>가격</th>
+													<th>전화번호</th>
+													<th>재고량</th>
+												</tr>
+											</thead>
+											<%
+												//DEFdetail에 넘겨지는 값들
+												if( keyword == null || keyword==""){ // 검색이 안되면
+													//System.out.println("공백");
+												for(int i=startrow+1; i < endrow; i++){
+													JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
+													<tbody id="page">
+														<tr>
+															<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
+															<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
+															&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>&totalcount=<%=lastrow%>"><%=DEFobject.get("name") %></a></td>
+															<td id="addr"><%=DEFobject.get("addr") %></td>
+															<td><%=DEFobject.get("price") %></td>
+															<td><%=DEFobject.get("tel") %></td>
+															<td><%=DEFobject.get("inventory") %></td>
+														</tr>
+													</tbody>
+											<%	} } else { // 검색을 하면 새로 페이징
+													String str = "";
+													
+													for(int i=0; i< Integer.parseInt(s); i++){
+														JSONObject DEFobject = (JSONObject) DEFArray.get(i);
+														str = (String)DEFobject.get("name");
+														//System.out.println(String.valueOf(str));
+														String str2 = (String)DEFobject.get("inventory");
+														String str3 = (String)DEFobject.get("addr");
+														String str4 = (String)DEFobject.get("price");
+														String str5 = (String)DEFobject.get("regDt");
+														String str6 = (String)DEFobject.get("lat");
+														String str7 = (String)DEFobject.get("lng");
+														String str8= (String)DEFobject.get("tel");
+														String str9= (String)DEFobject.get("openTime");
+														Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
+														String[] stt = db2.getAddr().split(" ");
+														//검색어 
+														//0번째에 경기도, 세종특별자치시, 제주특별자치도, 인천광역시, 충북충주시산척면평택제천고속도로109
+														//1번째에 용인시, 강서구, 양양군, 부강면
+														//2번째에 삼호읍, 가락대로, 석문면, 묘도1길, 남악로58번길
+														//3번째에 신북로, 1217, 1107(고암동)
+														//String addrsplit1 = stt[1];
+														//String addrsplit2 = stt[2];
+														System.out.println(Arrays.toString(stt));
+														try{
+															if(stt[0].matches(".*" +keyword+ ".*") || stt[1].matches(".*" +keyword+ ".*") || stt[2].matches(".*" +keyword+ ".*") || stt[3].matches(".*" +keyword+ ".*")){
+																a1.add(db2);
+																//System.out.println("맞음"+i);
+															}//검색어 막는 법을 모르겠다.
+														}catch(Exception e){
+															//System.out.println(e.getMessage());
+														}
+													}
+													//위에 전역변수로 설정이 되어있으니까 새로 변수로 다시값을 바꿔주기
+													//총 게시물 수
+											 		lr = a1.size();
+											 		//화면당 표시할 게시물 수
+											 		ls = 18;
+											 		//마지막 페이지
+											 		lp = 0;
+											 		cp = Integer.parseInt(pagenum);
+													sr = (cp-1)*ls;
+													er = cp*ls;
+													if( lr % ls == 0 ){		// 만약에 총게시물/페이지당게시물 나머지가 없으면
+											 			lp = lr / ls;		// * 총게시물/페이당게시물 
+													}else{
+														lp = lr / ls+1;	// * 총게시물/페이당게시물+1
+													}
+													
+													System.out.println("cp : "+cp);
+													System.out.println("er : "+er);
+													//시작점          총게시물수
+												 for(int i=sr; i < er; i++){
+														%>
+														 <tbody id="page">
+															<tr>
+																<td><a id="detail" href="DEFdetail.jsp?name=<%=a1.get(i).getName()%>&addr=<%=a1.get(i).getAddr()%>&price=<%=a1.get(i).getPrice()%>&tel=
+																<%=a1.get(i).getTel()%>&inventory=<%=a1.get(i).getInventory()%>&openTime=<%=a1.get(i).getOpenTime()%>&regDt=<%=a1.get(i).getRegDt()%>
+																&lat=<%=a1.get(i).getAddr()%>&lng=<%=a1.get(i).getAddr()%>"><%=a1.get(i).getName() %></a></td>
+																<td id="addr"><%=a1.get(i).getAddr() %></td>
+																<td><%=a1.get(i).getPrice() %></td>
+																<td><%=a1.get(i).getTel() %></td>
+																<td><%=a1.get(i).getInventory() %></td>
+															</tr>
+														</tbody>  
+													<%
+												}
+														//총 게시물 수
+											 		lastrow = lr;
+											 		//System.out.print(lastrow);
+											 		//화면당 표시할 게시물 수
+											 		listsize = ls;
+											 		//마지막 페이지
+											 		
+													lastpage = lp;
+													//System.out.println("lastpage : "+lastpage);
+											 		currentpage = cp;
+											 		//System.out.print(currentpage);
+													startrow = sr;
+													//System.out.print(startrow);
+													endrow = er;
+												}
 										%>
-										 <tbody id="page">
-											<tr>
-												<td><a id="detail" href="DEFdetail.jsp?name=<%=a1.get(i).getName()%>&addr=<%=a1.get(i).getAddr()%>&price=<%=a1.get(i).getPrice()%>&tel=
-												<%=a1.get(i).getTel()%>&inventory=<%=a1.get(i).getInventory()%>&openTime=<%=a1.get(i).getOpenTime()%>&regDt=<%=a1.get(i).getRegDt()%>
-												&lat=<%=a1.get(i).getAddr()%>&lng=<%=a1.get(i).getAddr()%>"><%=a1.get(i).getName() %></a></td>
-												<td id="addr"><%=a1.get(i).getAddr() %></td>
-												<td><%=a1.get(i).getPrice() %></td>
-												<td><%=a1.get(i).getTel() %></td>
-												<td><%=a1.get(i).getInventory() %></td>
-											</tr>
-										</tbody>  
-									<%
-								}
-										//총 게시물 수
-							 		lastrow = lr;
-							 		//System.out.print(lastrow);
-							 		//화면당 표시할 게시물 수
-							 		listsize = ls;
-							 		//마지막 페이지
-							 		
-									lastpage = lp;
-									System.out.print("마지막페이지:"+lastpage);
-							 		currentpage = cp;
-							 		//System.out.print(currentpage);
-									startrow = sr;
-									//System.out.print(startrow);
-									endrow = er;
-								}
-						%>
-					</table>
-					<!-- 페이징 -->
-						<div class="row">
-							<div class="col-md-10 offset-2 justify-content-center my-3">
-								<ul class="pagination"> <!-- 게시판 페이징 번호 -->
-										<!-- 첫페이지에서 이전 페이지 눌렀을 때  첫페이지 고정-->
-									<% if( currentpage == 1 ){%>
-										<%if ( keyword==null ) {%>
-											<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage %>"  class="page-link">이전</a> </li>
-										<%}else{ %>
-											<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
-										<%} %>	
-									<%}else{ %>
-										<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage-1 %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
-									<%} %>														<!-- 현재페이지번호-1 -->
+										</table>
+										<!-- 테이블 끝 -->
 									
-										<!-- 게시물의 수만큼 페이지 번호 생성 -->
-									<% for(int i=1; i<=lastpage; i++){ %>
-									
-										<% if( keyword == null ){ %>
-										<li class="page-item"><a href="Main.jsp?pagenum=<%=i %>" class="page-link"> <%=i %> </a> </li>
-												<!-- i 클릭했을때 현재 페이지 이동 [ 클릭한 페이지번호 ] -->
-										<%}else{%>
-										<li class="page-item"><a href="Main.jsp?pagenum=<%=i %>&keyword=<%=keyword %>" class="page-link"> <%=i %> </a> </li>
-										<%} %>
-										
-									<%} %>
-									
-										<!-- 마지막페이지에서 다음버튼 눌렀을때 마지막 페이지 고정 -->
-									<% if( currentpage == lastpage ){%>	
-									<% if( keyword == null ){ %>
-										<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1%>" class="page-link"> 다음 </a> </li>
-										<%}else{%>
-										<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1%>&keyword=<%=keyword %>" class="page-link"> 다음 </a> </li>	
-										<%} %>
-									<%}else{ %>
-										<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword %>" class="page-link">다음 </a> </li>
-									<%} %>	
-								
-								</ul>
-							</div>
-						</div>	
-					</form>
-				</div>
-            </section>
+										<!-- 게시판 페이징 -->
+										<div class="row container-fluid dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+											<ul class="pagination"> 
+												<!-- 첫페이지에서 이전 페이지 눌렀을 때  첫페이지 고정-->
+												<!-- 현재페이지번호-1 -->
+												<% if( currentpage == 1 ){%>
+													<%if ( keyword==null ) {%>
+														<li class="paginate_button page-item previous" id="dataTable_previous" > <a href="Main.jsp?pagenum=<%=currentpage %>"  aria-controls="dataTable" class="page-link">이전</a> </li>
+													<%}else{ %>
+														<li class="paginate_button page-item previous" id="dataTable_previous"> <a href="Main.jsp?pagenum=<%=currentpage %>&keyword=<%=keyword%>"  aria-controls="dataTable" class="page-link">이전</a> </li>
+													<%} %>	
+												<%}else{ %>
+													<!-- 1페이지가 아닌데 키워드 없음 -->
+													<%if(keyword==null) {%>
+													<li class="paginate_button page-item previous" id="dataTable_previous" > <a href="Main.jsp?pagenum=<%=currentpage-1 %>"  aria-controls="dataTable" class="page-link">이전</a> </li>
+												<%	// 1페이지가 아닌데 키워드 있음
+													}else{%>
+														<li class="paginate_button page-item previous" id="dataTable_previous" > <a href="Main.jsp?pagenum=<%=currentpage-1 %>&keyword=<%=keyword%>"  aria-controls="dataTable" class="page-link">이전</a> </li>
+												<%	
+													}
+												}
+												%>														
+													
+													<!-- 게시물의 수만큼 페이지 번호 생성 -->
+												<% for(int i=1; i<=lastpage; i++){ %>
+												
+													<% if( keyword == null ){ %>
+													<li class="paginate_button page-item"><a href="Main.jsp?pagenum=<%=i %>" aria-controls="dataTable" class="page-link"> <%=i %> </a> </li>
+															<!-- i 클릭했을때 현재 페이지 이동 [ 클릭한 페이지번호 ] -->
+													<%}else{%>
+													<li class="paginate_button page-item"><a href="Main.jsp?pagenum=<%=i %>&keyword=<%=keyword %>"  aria-controls="dataTable" class="page-link"> <%=i %> </a> </li>
+													<%} %>
+													
+												<%} %>
+												
+													<!-- 마지막페이지에서 다음버튼 눌렀을때 마지막 페이지 고정 -->
+												<% if( currentpage == lastpage ){%>	
+												<% 	if( keyword == null ){ %>
+													<li class="paginate_button page-item next" id="dataTable_next"><a href="Main.jsp?pagenum=<%=currentpage%>" aria-controls="dataTable" class="page-link"> 다음 </a> </li>
+													<%}else{%>
+													<li class="paginate_button page-item next" id="dataTable_next"><a href="Main.jsp?pagenum=<%=currentpage%>&keyword=<%=keyword%>" aria-controls="dataTable" class="page-link"> 다음 </a> </li>	
+													<%} %>
+												<%}else{ %>
+													<!-- 마지막 페이지가 아닌데 키워드 없음  -->
+													<%if(keyword==null) {%>
+													<li class="paginate_button page-item next" id="dataTable_next"><a href="Main.jsp?pagenum=<%=currentpage+1 %>" aria-controls="dataTable" class="page-link">다음 </a> </li>
+												<%	//마지막 페이지 아닌데 키워드 있음
+													}else{%>
+													<li class="paginate_button page-item next" id="dataTable_next"><a href="Main.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword%>" aria-controls="dataTable" class="page-link">다음 </a> </li>
+												<%			
+													}
+												}
+												%>	
+											
+											</ul>
+										</div><!-- 페이징 끝 -->
+									</form><!-- form 끝 -->
+								</div>	<!-- table-responsive끝 -->
+							</div><!-- card body 끝 --> 
+						</div><!-- card 끝 -->
+					</div>
+				</div> <!-- col-md-12 끝 -->
+            </section> <!-- 메인 section 끝 -->
             <hr class="m-0" />
+            
             <!-- Experience-->
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">

@@ -177,6 +177,7 @@ $(document).ready( function(){
 		    // 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다 
 		    // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
 		}
+		}
 	});
 });		
 

@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<%@include file="header.jsp" %>
+	<%@include file="header2.jsp" %>
 	
 	<div id="app">
 	  <p>{{ message }}</p>
@@ -45,7 +45,7 @@
 	
 	
 	<div class="container">
-		<form class="row col-md-6 offset-3" style="text-align: center;" action="Main.jsp" method="get">
+		<form class="row col-md-6 offset-3" style="text-align: center;" action="AppMain2.jsp" method="get">
 			<input type = "text" class="form-control col-md-10" name = "keyword">
 			<input type = "submit" class="btn btn-outline-dark col-md-2" value="검색">
 		</form>
@@ -233,22 +233,22 @@
 							<!-- 첫페이지에서 이전 페이지 눌렀을 때  첫페이지 고정-->
 						<% if( currentpage == 1 ){%>
 							<%if ( keyword==null ) {%>
-								<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage %>"  class="page-link">이전</a> </li>
+								<li class="page-item"> <a href= "AppMain2.jsp?pagenum=<%=currentpage %>"  class="page-link">이전</a> </li>
 							<%}else{ %>
-								<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
+								<li class="page-item"> <a href= "AppMain2.jsp?pagenum=<%=currentpage %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
 							<%} %>	
 						<%}else{ %>
-							<li class="page-item"> <a href= "Main.jsp?pagenum=<%=currentpage-1 %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
+							<li class="page-item"> <a href= "AppMain2.jsp?pagenum=<%=currentpage-1 %>&keyword<%=keyword %>"  class="page-link">이전</a> </li>
 						<%} %>														<!-- 현재페이지번호-1 -->
 						
 							<!-- 게시물의 수만큼 페이지 번호 생성 -->
 						<% for(int i=1; i<=lastpage; i++){ %>
 						
 							<% if( keyword == null ){ %>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=i %>" class="page-link"> <%=i %> </a> </li>
+							<li class="page-item"><a href="AppMain2.jsp?pagenum=<%=i %>" class="page-link"> <%=i %> </a> </li>
 									<!-- i 클릭했을때 현재 페이지 이동 [ 클릭한 페이지번호 ] -->
 							<%}else{%>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=i %>&keyword=<%=keyword %>" class="page-link"> <%=i %> </a> </li>
+							<li class="page-item"><a href="AppMain2.jsp?pagenum=<%=i %>&keyword=<%=keyword %>" class="page-link"> <%=i %> </a> </li>
 							<%} %>
 							
 						<%} %>
@@ -256,12 +256,12 @@
 							<!-- 마지막페이지에서 다음버튼 눌렀을때 마지막 페이지 고정 -->
 						<% if( currentpage == lastpage ){%>	
 						<% if( keyword == null ){ %>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1%>" class="page-link"> 다음 </a> </li>
+							<li class="page-item"><a href="AppMain2.jsp?pagenum=<%=currentpage+1%>" class="page-link"> 다음 </a> </li>
 							<%}else{%>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1%>&keyword=<%=keyword %>" class="page-link"> 다음 </a> </li>	
+							<li class="page-item"><a href="AppMain2.jsp?pagenum=<%=currentpage+1%>&keyword=<%=keyword %>" class="page-link"> 다음 </a> </li>	
 							<%} %>
 						<%}else{ %>
-							<li class="page-item"><a href="Main.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword %>" class="page-link">다음 </a> </li>
+							<li class="page-item"><a href="AppMain2.jsp?pagenum=<%=currentpage+1 %>&keyword=<%=keyword %>" class="page-link">다음 </a> </li>
 						<%} %>	
 					
 					</ul>
@@ -269,7 +269,5 @@
 			</div>	
 		</form>
 	</div>
-	
-	<%@include file="footer.jsp" %>
 </body>
 </html>

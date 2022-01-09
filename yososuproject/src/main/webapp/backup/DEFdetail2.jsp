@@ -12,7 +12,7 @@
 	</style>
 </head>
 <body>
-	<%@include file="header.jsp" %>
+	<%@include file="header2.jsp" %>
 	<%
 		String name = request.getParameter("name");
 		String addr = request.getParameter("addr");
