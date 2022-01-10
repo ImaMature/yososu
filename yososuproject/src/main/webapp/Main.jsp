@@ -14,21 +14,7 @@
 <!DOCTYPE html>
 <html>
  	<head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>요소수 프로젝트</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-        <!-- 카카오api -->
-   		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0e5c8f069f28a97af84bf0e74572de71"></script>
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+      
          
     </head>
     <%
@@ -43,34 +29,26 @@
 		ArrayList<Databases> a1 = new ArrayList<>();
 		
 		Databases db = new Databases();
+		
+		//totalCount 빼오기 위한 api
+		URL url2 = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page=1&perPage=100&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
+		BufferedReader bf2 = new BufferedReader(new InputStreamReader(url2.openStream(), "UTF-8"));
+		String rs2 = bf2.readLine();
+		JSONParser jsonParser2 = new JSONParser();
+		JSONObject jsonObject2 = (JSONObject) jsonParser2.parse(rs2);
+		 JSONArray DEFArray2 = (JSONArray) jsonObject2.get("data");
+		int s2 = Integer.parseInt(String.valueOf(jsonObject2.get("totalCount")));
 	%>
     <body id="page-top">
         <!-- 네비바-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="Main.jsp">
-                <span class="d-block d-lg-none">요기래</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/YOGIRAE-logo-white.png" alt="..." /></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#DEFmain">메인 페이지</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>
-                </ul>
-            </div>
-        </nav>
+        <%@include file="header.jsp" %>
         <!-- 네비바 끝 -->
         <!-- 페이지 내용들-->
         <div class="container-fluid p-0">
 		<%
 			int k =0;
-			int j =2400;		
 			 	//요소수 API 가져오기
-				 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+j+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
+				 URL url = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page="+k+"&perPage="+s2+"&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 				 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 				 String rs = bf.readLine();
 				 
@@ -79,10 +57,10 @@
 				 JSONArray DEFArray = (JSONArray) jsonObject.get("data");
 				 
 				 	s = String.valueOf(jsonObject.get("totalCount"));
-				 	//System.out.println(s );
+				 	
 			 		//총 게시물 수
 			 		int lastrow = Integer.parseInt(s);
-			 		//System.out.print(lastrow);
+			 		//System.out.println(lastrow);
 			 		//화면당 표시할 게시물 수
 			 		int listsize = 100;
 			 		//마지막 페이지
@@ -123,13 +101,21 @@
 		                    <div class="card-body">
 			                    <div class="table-responsive">
 			                    	<!-- 검색창 시작 -->
-									<form class="row col-md-8 mx-2 mt-3" style="text-align: center;" action="Main.jsp" method="get">
+									<form class="row col-md-12 mx-2 mt-3 "  style="text-align: center;" action="Main.jsp" method="get">
 						               	<div class="col-md-3">
 											<input type = "text" class="form-control col-md-10" name = "keyword">
 										</div>
-										<div class="col-md-1">
+										<div class="col-md-1 ">
 											<input type = "submit" class="btn btn-primary" style="color: white;" value="검색">
 										</div>
+										<div class="col-md-6"></div>
+										<div class="col-md-2">
+											<%for(int q=0; q<endrow; q++){
+												JSONObject DEFobject2 = (JSONObject) DEFArray.get(q);
+											}
+											%>
+											<button class="btn btn-primary" onclick = "location.href = '#' " style="color: white;">내 주변 주유소 찾기</button>
+										</div>	
 									</form>
 									
 									<!-- 검색창 끝 -->
@@ -154,9 +140,7 @@
 													JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
 													<tbody id="page">
 														<tr>
-															<td><a href="DEFdetail.jsp?name=<%=DEFobject.get("name")%>&addr=<%=DEFobject.get("addr")%>&price=<%=DEFobject.get("price")%>&tel=
-															<%=DEFobject.get("tel")%>&inventory=<%=DEFobject.get("inventory")%>&openTime=<%=DEFobject.get("openTime")%>&regDt=<%=DEFobject.get("regDt")%>
-															&lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>&totalcount=<%=lastrow%>"><%=DEFobject.get("name") %></a></td>
+															<td><a href="DEFdetail.jsp?lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>&totalcount=<%=lastrow%>"><%=DEFobject.get("name") %></a></td>
 															<td id="addr"><%=DEFobject.get("addr") %></td>
 															<td><%=DEFobject.get("price") %></td>
 															<td><%=DEFobject.get("tel") %></td>
@@ -166,9 +150,15 @@
 											<%	} } else { // 검색을 하면 새로 페이징
 													String str = "";
 													
+													int cnt = 0;
 													for(int i=0; i< Integer.parseInt(s); i++){
+														
 														JSONObject DEFobject = (JSONObject) DEFArray.get(i);
 														str = (String)DEFobject.get("name");
+														int a11 = Integer.parseInt(s);
+														//System.out.println("a11" + a11);
+														cnt ++;
+														//System.out.println("갯수" + cnt);
 														//System.out.println(String.valueOf(str));
 														String str2 = (String)DEFobject.get("inventory");
 														String str3 = (String)DEFobject.get("addr");
@@ -187,7 +177,7 @@
 														//3번째에 신북로, 1217, 1107(고암동)
 														//String addrsplit1 = stt[1];
 														//String addrsplit2 = stt[2];
-														System.out.println(Arrays.toString(stt));
+														//System.out.println(Arrays.toString(stt));
 														try{
 															if(stt[0].matches(".*" +keyword+ ".*") || stt[1].matches(".*" +keyword+ ".*") || stt[2].matches(".*" +keyword+ ".*") || stt[3].matches(".*" +keyword+ ".*")){
 																a1.add(db2);
@@ -218,11 +208,9 @@
 													//시작점          총게시물수
 												 for(int i=sr; i < er; i++){
 														%>
-														 <tbody id="page">
+														 <tbody >
 															<tr>
-																<td><a id="detail" href="DEFdetail.jsp?name=<%=a1.get(i).getName()%>&addr=<%=a1.get(i).getAddr()%>&price=<%=a1.get(i).getPrice()%>&tel=
-																<%=a1.get(i).getTel()%>&inventory=<%=a1.get(i).getInventory()%>&openTime=<%=a1.get(i).getOpenTime()%>&regDt=<%=a1.get(i).getRegDt()%>
-																&lat=<%=a1.get(i).getAddr()%>&lng=<%=a1.get(i).getAddr()%>"><%=a1.get(i).getName() %></a></td>
+																<td><a id="detail" href="DEFdetail.jsp?lat=<%=a1.get(i).getLat()%>&lng=<%=a1.get(i).getLng()%>"><%=a1.get(i).getName() %></a></td>
 																<td id="addr"><%=a1.get(i).getAddr() %></td>
 																<td><%=a1.get(i).getPrice() %></td>
 																<td><%=a1.get(i).getTel() %></td>
@@ -318,12 +306,9 @@
             <!-- Experience-->
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Experience</h2>
+                    <h2 class="mb-5">주유소</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Senior Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
                     </div>
@@ -481,5 +466,22 @@
         <script src="js/scripts.js"></script>
         <!-- js호출 -->
    		<script src="js/main.js"></script>
+   		
+   		<script type="text/javascript">
+   	/* 	
+   		$(document).ready(function(){
+   	       $("#keyword").keyup(function() {
+   	           var k = $(this).val();
+   	           $("#data-table > tbody > tr").hide();
+   	           var temp = $("#item-table > tbody > tr > td:nth-child(5n+2):contains('" + k + "')");
+   	           var temp1 = $("#item-table > tbody > tr > td:nth-child(5n+3):contains('" + k + "')");
+   	           $(temp).parent().show();
+   	           $(temp1).parent().show();
+   	     })
+   	}) */
+   		
+   		</script>
+   		
+   		
     </body>
 </html>

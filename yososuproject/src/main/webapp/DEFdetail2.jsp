@@ -14,8 +14,15 @@
 <body>
 	<%@include file="header.jsp" %>
 	<%
+		String name = request.getParameter("name");
+		String addr = request.getParameter("addr");
+		String price = request.getParameter("price");
+		String inventory = request.getParameter("inventory");
+		String openTime = request.getParameter("openTime");
+		String regDt = request.getParameter("regDt");
 		String lat = request.getParameter("lat");
 		String lng = request.getParameter("lng");
+		String tel = request.getParameter("tel");
 		String totalcount = request.getParameter("totalcount");
 		
 		//System.out.println("lng : " + lng + " lat : " + lat +" totalcount : "+totalcount);
@@ -23,16 +30,13 @@
 
 	<section class="resume-section" id="education">
          <div class="resume-section-content">
-             <h2 class="mb-1 text-primary">요소수 지도</h2>
+             <h2 class="mb-5 text-primary">요소수 지도</h2>
              <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                  <div class="resume-section" id ="education">
 					<div class="resume-section-content">
-						<div>
-							<button class="btn btn-primary m-4" style="color:white;" id="findnearbtn">근처 요소수 주유소 찾기</button>
-							<button class="btn btn-primary" style="color:white;" id="currentbtn">현재 주유소 위치</button>
-						</div>
 						<div id="map" style="width:80vw; height:30vw; border: 1px solid black;"></div>
-						
+						<button class="btn btn-outline-dark m-4" id="findnearbtn">근처 요소수 주유소 찾기</button>
+						<button class="btn btn-outline-dark m-4" id="currentbtn">현재 주유소 정보</button>
 						<input type="hidden" id="lat" value="<%=lat%>">
 						<input type="hidden" id="lng" value="<%=lng%>">
 						<input type="hidden" id="totalcount2" value="<%=totalcount%>">

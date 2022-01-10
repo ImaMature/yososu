@@ -178,8 +178,8 @@ $(document).ready( function(){
 		    // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
 		}
 		}
-	});
 });		
+
 
 	
 		

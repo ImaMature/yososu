@@ -102,7 +102,7 @@ for(int u=0; u<arr.size(); u++){
 
 //거리 테스트
 for(int uu = 0; uu<arr2.size(); uu++){
-	if(arr2.get(uu).getDistance() < 5){ // 5km보다 작은 거리에 있는 리스트들을 출력 
+	if(arr2.get(uu).getDistance() < 4){ // 5km보다 작은 거리에 있는 리스트들을 출력 
 		//System.out.println("arr2 : "+arr2.get(uu).getName());
 		//System.out.println("arr2거리 : "+arr2.get(uu).getDistance());	
 		//System.out.println("arr2주소 : "+arr2.get(uu).getAddr());
@@ -112,7 +112,7 @@ for(int uu = 0; uu<arr2.size(); uu++){
 for(int y = 0; y<arr.size(); y++){
 	for(int m=0; m<arr2.size(); m++){
 		//두 arraylist의 이름이 같고 거리가 5km보다 작다면
-		if(arr.get(y).getAddr().equals(arr2.get(m).getAddr()) && arr2.get(m).getDistance() < 5){ 
+		if(arr.get(y).getAddr().equals(arr2.get(m).getAddr()) && arr2.get(m).getDistance() < 4){ 
 			System.out.println("==========================================");
 			System.out.println("arr1 name :" + arr.get(y).getName());
 			System.out.println("arr1 재고 : "+arr.get(y).getInventory());
