@@ -1,3 +1,9 @@
+<%@page import="org.jsoup.nodes.Element"%>
+<%@page import="org.jsoup.select.Elements"%>
+<%@page import="org.jsoup.nodes.Document"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="yososuproject.Databases"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="yososuproject.SimpleTesing.DateItem"%>
@@ -9,6 +15,7 @@
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.io.BufferedReader"%>
 <%@page import="java.net.URL"%>
+<%@page import="org.jsoup.Jsoup" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -99,22 +106,21 @@
 		                    </div>
 		                    <!-- card-body 시작 -->
 		                    <div class="card-body">
-			                    <div class="table-responsive">
+			                    <div class="table-responsive p-2">
 			                    	<!-- 검색창 시작 -->
 									<form class="row col-md-12 mx-2 mt-3 "  style="text-align: center;" action="Main.jsp" method="get">
-						               	<div class="col-md-3">
-											<input type = "text" class="form-control col-md-10" name = "keyword">
+						               	<div class="col-md-3 px-2">
+											<input type = "text" class="form-control col-md-10 px-0" name = "keyword">
 										</div>
 										<div class="col-md-1 ">
 											<input type = "submit" class="btn btn-primary" style="color: white;" value="검색">
 										</div>
-										<div class="col-md-6"></div>
-										<div class="col-md-2">
+										<div class="col-md-8 px-4" style="text-align: right;">
 											<%for(int q=0; q<endrow; q++){
 												JSONObject DEFobject2 = (JSONObject) DEFArray.get(q);
 											}
 											%>
-											<button class="btn btn-primary" onclick = "location.href = '#' " style="color: white;">내 주변 주유소 찾기</button>
+											<button class="btn btn-primary" onclick = "location.href = '#' " style="color: white;">근처 주유소</button>
 										</div>	
 									</form>
 									
@@ -122,8 +128,8 @@
 									<!-- form 시작 -->
 									<form action="DEFdetail.jsp" class="m-3">
 										<!-- 테이블 시작-->
-										<table class="table table-bordered"  id="dataTable">
-											<thead>
+										<table class="table table-sprited"  id="dataTable">
+											<thead class="table-primary">
 												<tr>
 													<th>상호명</th>
 													<th>주소</th>
@@ -304,40 +310,70 @@
             <hr class="m-0" />
             
             <!-- Experience-->
-            <section class="resume-section" id="experience">
+            <%
+            int page3 = 2;
+    		
+    		//오늘 날짜 가져오기
+    		SimpleDateFormat dtf = new SimpleDateFormat("yyyyMMdd"); //url 최신일자 기사용 
+    		SimpleDateFormat dtf2 = new SimpleDateFormat("yyyy-MM-dd"); //날짜 표시용
+            Calendar calendar = Calendar.getInstance();
+
+            Date dateObj = calendar.getTime();
+            String formattedDate = dtf.format(dateObj);
+            String formattedDate2 = dtf2.format(dateObj);
+    		for(int j=1; j < page3; j++) {
+    			String url3 = "https://news.naver.com/main/list.naver?mode=LS2D&sid2=263&sid1=101&mid=shm&date="+formattedDate+"&page=" + j;
+    			Document doc;
+    			try {
+    				doc = Jsoup.connect(url3).get();
+    				Elements elements = doc.getElementsByAttributeValue("class", "list_body newsflash_body");
+    				
+    				Element element = elements.get(0);
+    				Elements photoElements = element.getElementsByAttributeValue("class", "photo");
+    				
+    				%>
+    					
+    		<!-- 뉴스 페이지 시작 -->	
+            <section class="resume-section" id="news">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">주유소</h2>
+                    <h2 class="mb-5">뉴스</h2>
+                    <%for(int i=0; i<photoElements.size(); i++) {
+    					Element articleElement = photoElements.get(i);
+    					Elements aElements = articleElement.select("a");
+    					Element aElement = aElements.get(0);
+    					
+    					String articleUrl = aElement.attr("href");		// 기사링크
+    					
+    					Element imgElement = aElement.select("img").get(0);
+    					String imgUrl = imgElement.attr("src");			// 사진링크
+    					String title = imgElement.attr("alt");			// 기사제목
+    					String imgUrl2 = imgUrl.split("106_72")[0];		// 기사 큰 사진 가져오기
+    					Document subDoc = Jsoup.connect(articleUrl).get();
+    					Element contentElement = subDoc.getElementById("articleBodyContents");
+    					String content = contentElement.text();			// 기사내용%>
+    					
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
+		                    <div class="flex-shrink-0 mb-2"><span class="text-primary" style="font-size: 0.3rem;">날짜 : <%=formattedDate2 %></span></div>
+                            <h4 class="mb-4"><%=title %></h4>
+                            <div class="row"> 
+	                            <div class="mb-3"><img src="<%=imgUrl2%>" style="height: 14vw;"></img></div>
+	                            <div><p id="newscontent">&nbsp;&nbsp;<%=content %></p></div>
+                            </div>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
+                            <span style="font-size: 0.2rem;"><a href="<%=articleUrl %>" class="-bs-gray-800"><img src="assets/img/http.png"></a></span>
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">December 2011 - March 2013</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Junior Web Designer</h3>
-                            <div class="subheading mb-3">Shout! Media Productions</div>
-                            <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">July 2010 - December 2011</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Web Design Intern</h3>
-                            <div class="subheading mb-3">Shout! Media Productions</div>
-                            <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">September 2008 - June 2010</span></div>
-                    </div>
+                   	<%}
+		    			
+		    			} catch (Exception e) {
+		    				// TODO Auto-generated catch block
+		    				e.printStackTrace();
+		    			}
+		    		}
+		            %>
                 </div>
             </section>
+            <!-- 뉴스페이지 끝 -->
             <hr class="m-0" />
             <!-- Education-->
             <section class="resume-section" id="education">

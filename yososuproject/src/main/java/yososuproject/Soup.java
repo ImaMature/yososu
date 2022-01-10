@@ -3,6 +3,12 @@ package yososuproject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -13,40 +19,55 @@ import org.jsoup.select.Elements;
 public class Soup {
 
 	public static void main(String[] args) {
-        try {
-        	
-        	/*String URL = "https://ip-api.com/#goldcon.ddns.net";
-//			Connection conn = Jsoup.connect(URL);
-//			
-//			Document document = conn.get();
-//			
-//			Elements parsingDivs = document.getElementsByClass("parsingDiv"); // class가 parsingDiv인 element 찾기
-//			Element parsingDiv = parsingDivs.get(0);
-//			
-//			Element parsingTitle = parsingDiv.getElementById("parsingTitle"); // id가 parsingTitle인 element 찾기
-//			Element partsingContents = parsingDiv.getElementById("partsingContents"); // id가 parsingContents인 element 찾기
-//			
-//			String title = parsingTitle.getElementsByTag("h3").get(0).text(); // 첫 번째 h3태그의 text값 찾기
-//			String contents = partsingContents.getElementsByTag("p").get(0).text(); // 첫 번째 p태그의 text값 찾기
-//			
-//			System.out.println("파싱한 제목: " + title);
-//			System.out.println("파싱한 내용: " + contents);*/
-        	
-        	
-            //아래 URL 은 삭제되었을 수 있으므로, 문제가 발생한다면 최신 기사의 URL 을 사용한다.
-            Document doc = Jsoup.connect("https://news.naver.com/main/read.naver?mode=LSD&mid=sec&sid1=102&oid=214&aid=0001168041").get();
+		int page = 2;
+		
+		//오늘 날짜 가져오기
+		SimpleDateFormat dtf = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar = Calendar.getInstance();
 
-            Elements elements = doc.select("#articleBodyContents");
-
-            String[] p = elements.get(0).text().split("\\.");
-
-            for (int i = 0; i < p.length; i++) {
-                System.out.println(p[i]);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        Date dateObj = calendar.getTime();
+        String formattedDate = dtf.format(dateObj);
+		
+		for(int j=1; j < page; j++) {
+			String url = "https://news.naver.com/main/list.naver?mode=LS2D&sid2=263&sid1=101&mid=shm&date="+formattedDate+"&page=" + j;
+			Document doc;
+			try {
+				doc = Jsoup.connect(url).get();
+				Elements elements = doc.getElementsByAttributeValue("class", "list_body newsflash_body");
+				
+				Element element = elements.get(0);
+				Elements photoElements = element.getElementsByAttributeValue("class", "photo");
+				
+				for(int i=0; i<photoElements.size(); i++) {
+					Element articleElement = photoElements.get(i);
+					Elements aElements = articleElement.select("a");
+					Element aElement = aElements.get(0);
+					
+					String articleUrl = aElement.attr("href");		// 기사링크
+					
+					Element imgElement = aElement.select("img").get(0);
+					String imgUrl = imgElement.attr("src");			// 사진링크
+					String title = imgElement.attr("alt");			// 기사제목
+					String imgUrl2 = imgUrl.split("106_72")[0];
+					Document subDoc = Jsoup.connect(articleUrl).get();
+					Element contentElement = subDoc.getElementById("articleBodyContents");
+					String content = contentElement.text();			// 기사내용
+					StringBuilder sb = new StringBuilder(); 
+					String strarr [] = content.split(".");
+					
+					System.out.println(content);
+					//System.out.println(Arrays.toString(strarr));
+					
+				}
+				//System.out.println(j + "page 크롤링 종료");
+			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}
+	}
 
 
 

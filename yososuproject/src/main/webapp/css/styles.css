@@ -2041,15 +2041,16 @@ progress {
 }
 
 .table-primary {
-  --bs-table-bg: #f2dfd7;
+  --bs-table-bg: #6161d8;
   --bs-table-striped-bg: #e6d4cc;
   --bs-table-striped-color: #000;
   --bs-table-active-bg: #dac9c2;
   --bs-table-active-color: #000;
   --bs-table-hover-bg: #e0cec7;
   --bs-table-hover-color: #000;
-  color: #000;
-  border-color: #dac9c2;
+  color: #ffffff;
+  border-color: #ffffff;
+  letter-spacing :0.12em;
 }
 
 .table-secondary {
@@ -11337,7 +11338,7 @@ p.lead {
 }
 
 .subheading {
-  font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "SEBANG_Gothic_Regular";
   text-transform: uppercase;
   font-weight: 500;
   font-size: 1.5rem;
@@ -11449,4 +11450,10 @@ section.resume-section .resume-section-content {
 
 .table-section{
 	padding:2rem 10rem 5rem 10rem;
+}
+
+#newscontent{
+	font-size: 0.5rem;
+	letter-spacing : 0.05rem;
+	line-height: 180%;
 }
