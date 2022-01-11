@@ -44,8 +44,8 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#DEFmain">메인 페이지</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#mainmap">지도</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#news">뉴스</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>

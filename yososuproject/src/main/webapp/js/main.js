@@ -26,51 +26,16 @@ function search(){
 }*/
 
 //지도(카카오api)	
-//현재 주유소 정보 지도 start	
-$(document).ready( function(){ 
-	//alert("실행");
-	
-	var lat = document.getElementById("lat").value;
-	//alert(lat);
-	var lng = document.getElementById("lng").value;
-	//var lng = 129.19361230; var lat =35.81250810;
-	//alert(lng);
-	
-	var container = document.getElementById('map');
-	var options = {
-		center: new kakao.maps.LatLng(lat, lng),
-		level: 3
-	};
 
-	var map = new kakao.maps.Map(container, options);
-	var marker = new kakao.maps.Marker();
-
-	// 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
-	kakao.maps.event.addListener(map, 'tilesloaded', displayMarker);
-	
-	function displayMarker() {
-	    
-	    // 마커의 위치를 지도중심으로 설정합니다 
-	    marker.setPosition(map.getCenter()); 
-	    marker.setMap(map); 
-	
-	    // 아래 코드는 최초 한번만 타일로드 이벤트가 발생했을 때 어떤 처리를 하고 
-	    // 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다 
-	    // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
-	}
-	//현재 주유소 정보 지도 end
-	
-	
 	
 	
 	//근처 주유소 찾기 start
 	$("#findnearbtn").click(function(){
 		
-		kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		        level: 7 // 지도의 확대 레벨 
+		        level:5 // 지도의 확대 레벨 
 		    }; 
 		
 		var map2 = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -79,13 +44,14 @@ $(document).ready( function(){
 		if (navigator.geolocation) {
 		    
 		    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+			
 		    navigator.geolocation.getCurrentPosition(function(position) {
-		        
 				//현재 위치
 		        var lat2 = position.coords.latitude, // 위도
 		            lon2 = position.coords.longitude; // 경도
 					//현재 위치 테스트
 					alert("lat2 : "+ lat2 + " lon2 : " + lon2);
+				var locPosition2 = new kakao.maps.LatLng(lat2, lon2)
 					
 		        var locPosition = new kakao.maps.LatLng(lat2, lon2), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 		        message = '<div class="text-center" style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
@@ -108,27 +74,26 @@ $(document).ready( function(){
 								var locPosition = new kakao.maps.LatLng(arr2[j][0], arr2[j][1])
 								message = '<div class="text-center" style="padding:5px;">'+arr2[j][2]+'<br>'+arr2[j][3]+'<br>'+arr2[j][5]+'</div>';
 					        	displayMarker(locPosition, message);
-								
-								
+								if( j == arr2.length-1){
+									locPosition = new kakao.maps.LatLng(lat2, lon2)
+									alert( locPosition )
+								}
 							}
-							
-							
 						}
 					});
-					 displayMarker(locPosition, message);
+				 displayMarker(locPosition2, message);
+				 map2.setCenter(locPosition2); 
 		      });
 		    
 		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 		    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
 		        message = 'geolocation을 사용할수 없어요..'
-		    
 		        
 		    displayMarker(locPosition, message);
 		}
 		
 		// 지도에 마커와 인포윈도우를 표시하는 함수입니다
 		function displayMarker(locPosition, message) {
-		
 		    // 마커를 생성합니다
 		    var marker2 = new kakao.maps.Marker({  
 		        map2: map2, 
@@ -146,48 +111,48 @@ $(document).ready( function(){
 		    
 		    // 인포윈도우를 마커위에 표시합니다 
 		    infowindow.open(map2, marker2);
-		    
 		    // 지도 중심좌표를 접속위치로 변경합니다
 		    map2.setCenter(locPosition);  
-		} //근처 주유소 찾기 end(그러나 현재 내 위치만 나옴)   
+		} //근처 주유소 찾기 end(그러나 현재 내 위치만 나옴)  
 	});
 	//근처 주유소 찾기 end
 	
 	
 	
-	//현재 주유소 표시하기
-	$("#currentbtn").click(function(){
-		//alert("실행");
-		kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
-		//var lng3 = 129.19361230; var lat3 =35.81250810;
-		var lat3 = document.getElementById("lat").value;
-		var lng3 = document.getElementById("lng").value;
-		//alert(lng);
-		var container2 = document.getElementById('map');
-		var options2 = {
-			center: new kakao.maps.LatLng(lat3, lng3),
-			level: 3
-		};
-	
-		var map3 = new kakao.maps.Map(container2, options2);
-		var marker3 = new kakao.maps.Marker();
-	
-		// 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
-		kakao.maps.event.addListener(map3, 'tilesloaded', displayMarker2);
-		
-		function displayMarker2() {
-		    
-		    // 마커의 위치를 지도중심으로 설정합니다 
-		    marker3.setPosition(map3.getCenter()); 
-		    marker3.setMap(map3); 
-		
-		    // 아래 코드는 최초 한번만 타일로드 이벤트가 발생했을 때 어떤 처리를 하고 
-		    // 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다 
-		    // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
-		}
-	});
-});		
+//a태그 누르면 해당 주유소 표시하기
+function detailmap(laat, lnng){
+	alert("실행");
+	//var lng3 = 129.19361230; var lat3 =35.81250810;
+	var lat3 = laat;
+	var lng3 = lnng;
+	alert(lat3);
+	alert(lng3);
+	var container2 = document.getElementById('map');
+	var options2 = {
+		center: new kakao.maps.LatLng(lat3, lng3),
+		level: 3
+	};
 
+	var map3 = new kakao.maps.Map(container2, options2);
+	var markerPosition  = new kakao.maps.LatLng(lat3, lng3); 
+	// 마커를 생성합니다
+	var marker3 = new kakao.maps.Marker({
+	    position: markerPosition
+	});
+
+	//alert(map3);
+	// 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
+	kakao.maps.event.addListener(map3, 'tilesloaded', displayMarker2);
 	
-	
+	function displayMarker2() {
+	   // alert("displayMarker2");
+	    // 마커의 위치를 지도중심으로 설정합니다 
+	    //marker3.setPosition(map3.getCenter()); 
+	    marker3.setMap(map3); 
+
+	}
+}
+
+
+
 		

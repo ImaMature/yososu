@@ -50,6 +50,7 @@
         <!-- 네비바-->
         <%@include file="header.jsp" %>
         <!-- 네비바 끝 -->
+        
         <!-- 페이지 내용들-->
         <div class="container-fluid p-0">
 		<%
@@ -96,8 +97,8 @@
 					int er = 0;
 			%>
             <!-- 메인페이지-->
-            <section class="table-section" id="DEFmain"> <!-- section 시작 -->
-            	<div class="col-md-12">
+            <section class="resume-section" id="DEFmain"> <!-- section 시작 -->
+            	<div class="resume-section-content">
 	                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 						<div class="card shadow mb-4">
 							<!-- 테이블 헤더 -->
@@ -106,21 +107,16 @@
 		                    </div>
 		                    <!-- card-body 시작 -->
 		                    <div class="card-body">
-			                    <div class="table-responsive p-2">
+			                    <div class="table-responsive col-12 p-2">
 			                    	<!-- 검색창 시작 -->
-									<form class="row col-md-12 mx-2 mt-3 "  style="text-align: center;" action="Main.jsp" method="get">
-						               	<div class="col-md-3 px-2">
+									<form class="row col-12 m-1"  style="text-align: center;" action="Main.jsp" method="get">
+						               	<div class="col-5">
 											<input type = "text" class="form-control col-md-10 px-0" name = "keyword">
 										</div>
-										<div class="col-md-1 ">
+										<div class="col-1 ">
 											<input type = "submit" class="btn btn-primary" style="color: white;" value="검색">
 										</div>
-										<div class="col-md-8 px-4" style="text-align: right;">
-											<%for(int q=0; q<endrow; q++){
-												JSONObject DEFobject2 = (JSONObject) DEFArray.get(q);
-											}
-											%>
-											<button class="btn btn-primary" onclick = "location.href = '#' " style="color: white;">근처 주유소</button>
+										<div class="col-6 px-4" style="text-align: right;">
 										</div>	
 									</form>
 									
@@ -143,16 +139,19 @@
 												if( keyword == null || keyword==""){ // 검색이 안되면
 													//System.out.println("공백");
 												for(int i=startrow+1; i < endrow; i++){
-													JSONObject DEFobject = (JSONObject) DEFArray.get(i);%>
+													JSONObject DEFobject = (JSONObject) DEFArray.get(i);
+													%>
 													<tbody id="page">
 														<tr>
-															<td><a href="DEFdetail.jsp?lat=<%=DEFobject.get("lat")%>&lng=<%=DEFobject.get("lng")%>&totalcount=<%=lastrow%>"><%=DEFobject.get("name") %></a></td>
+															<td><a href="#mainmap" onclick="detailmap(<%=DEFobject.get("lat") %>, <%=DEFobject.get("lng")%>);"><%=DEFobject.get("name") %></a></td>
 															<td id="addr"><%=DEFobject.get("addr") %></td>
 															<td><%=DEFobject.get("price") %></td>
 															<td><%=DEFobject.get("tel") %></td>
 															<td><%=DEFobject.get("inventory") %></td>
+															<td id="inputLat" style="display: none;"><%=DEFobject.get("lat") %></td>
 														</tr>
 													</tbody>
+													
 											<%	} } else { // 검색을 하면 새로 페이징
 													String str = "";
 													
@@ -216,11 +215,12 @@
 														%>
 														 <tbody >
 															<tr>
-																<td><a id="detail" href="DEFdetail.jsp?lat=<%=a1.get(i).getLat()%>&lng=<%=a1.get(i).getLng()%>"><%=a1.get(i).getName() %></a></td>
+																<td><a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a></td>
 																<td id="addr"><%=a1.get(i).getAddr() %></td>
 																<td><%=a1.get(i).getPrice() %></td>
 																<td><%=a1.get(i).getTel() %></td>
 																<td><%=a1.get(i).getInventory() %></td>
+																<td id="" style="display: none;"></td>
 															</tr>
 														</tbody>  
 													<%
@@ -297,19 +297,36 @@
 													}
 												}
 												%>	
-											
 											</ul>
 										</div><!-- 페이징 끝 -->
 									</form><!-- form 끝 -->
 								</div>	<!-- table-responsive끝 -->
 							</div><!-- card body 끝 --> 
 						</div><!-- card 끝 -->
-					</div>
+					</div><!-- dataTable_wrapper 끝 -->
 				</div> <!-- col-md-12 끝 -->
             </section> <!-- 메인 section 끝 -->
             <hr class="m-0" />
             
-            <!-- Experience-->
+            <!-- 메인 지도 나오는 곳(a태그) -->
+            
+            <section class="resume-section" id="mainmap">
+	         <div class="resume-section-content">
+	             <h2 class="mb-1 text">요소수 지도</h2>
+	             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+	                 <div class="resume-section" id ="education">
+						<div class="resume-section-content">
+							<div>
+								<button class="btn btn-primary mx-0 my-4" style="color:white;" id="findnearbtn">근처 요소수 주유소 찾기</button>
+							</div>
+							<div id="map" style="width:80vw; height:34vw; border: 1px solid black;"></div>
+							
+							</div>
+						</div>
+	              </div>
+	          </div>
+	      </section>
+            
             <%
             int page3 = 2;
     		
@@ -331,7 +348,7 @@
     				Element element = elements.get(0);
     				Elements photoElements = element.getElementsByAttributeValue("class", "photo");
     				
-    				%>
+ 				%>
     					
     		<!-- 뉴스 페이지 시작 -->	
             <section class="resume-section" id="news">
@@ -363,14 +380,14 @@
                         </div>
                             <span style="font-size: 0.2rem;"><a href="<%=articleUrl %>" class="-bs-gray-800"><img src="assets/img/http.png"></a></span>
                     </div>
-                   	<%}
-		    			
-		    			} catch (Exception e) {
-		    				// TODO Auto-generated catch block
-		    				e.printStackTrace();
-		    			}
-		    		}
-		            %>
+                 	<%}
+    			
+    			} catch (Exception e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		}
+            %>
                 </div>
             </section>
             <!-- 뉴스페이지 끝 -->

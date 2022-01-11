@@ -13,6 +13,7 @@
 </head>
 <body>
 	<%@include file="header.jsp" %>
+	
 	<%
 		String lat = request.getParameter("lat");
 		String lng = request.getParameter("lng");
@@ -28,14 +29,11 @@
                  <div class="resume-section" id ="education">
 					<div class="resume-section-content">
 						<div>
-							<button class="btn btn-primary m-4" style="color:white;" id="findnearbtn">근처 요소수 주유소 찾기</button>
-							<button class="btn btn-primary" style="color:white;" id="currentbtn">현재 주유소 위치</button>
 						</div>
 						<div id="map" style="width:80vw; height:30vw; border: 1px solid black;"></div>
-						
-						<input type="hidden" id="lat" value="<%=lat%>">
-						<input type="hidden" id="lng" value="<%=lng%>">
-						<input type="hidden" id="totalcount2" value="<%=totalcount%>">
+							<input type="hidden" id="lat" value="<%=lat%>">
+							<input type="hidden" id="lng" value="<%=lng%>">
+							<input type="hidden" id="totalcount2" value="<%=totalcount%>">
 						</div>
 					</div>
               </div>
