@@ -143,7 +143,7 @@
 													%>
 													<tbody id="page">
 														<tr>
-															<td><a href="#mainmap" onclick="detailmap(<%=DEFobject.get("lat") %>, <%=DEFobject.get("lng")%>);"><%=DEFobject.get("name") %></a></td>
+															<td><a href="#mainmap" onclick="detailmap(<%=DEFobject.get("lat") %>, <%=DEFobject.get("lng")%>, <%=DEFobject.get("tel")%>);"><%=DEFobject.get("name") %></a></td>
 															<td id="addr"><%=DEFobject.get("addr") %></td>
 															<td><%=DEFobject.get("price") %></td>
 															<td><%=DEFobject.get("tel") %></td>
@@ -215,7 +215,9 @@
 														%>
 														 <tbody >
 															<tr>
-																<td><a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a></td>
+																<td>
+																	<a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a>
+																</td>
 																<td id="addr"><%=a1.get(i).getAddr() %></td>
 																<td><%=a1.get(i).getPrice() %></td>
 																<td><%=a1.get(i).getTel() %></td>
