@@ -150,6 +150,7 @@ function detailmap(laat, lnng){
 		center: new kakao.maps.LatLng(lat3, lng3),
 		level: 3
 	};
+	
 
 	var map3 = new kakao.maps.Map(container2, options2);
 	var markerPosition  = new kakao.maps.LatLng(lat3, lng3); 

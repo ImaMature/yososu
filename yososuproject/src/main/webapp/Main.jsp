@@ -6,7 +6,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="yososuproject.Databases"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="yososuproject.SimpleTesing.DateItem"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="org.json.simple.JSONArray"%>
@@ -216,7 +215,7 @@
 														 <tbody >
 															<tr>
 																<td>
-																	<a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a>
+																<a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a>
 																</td>
 																<td id="addr"><%=a1.get(i).getAddr() %></td>
 																<td><%=a1.get(i).getPrice() %></td>
@@ -394,8 +393,18 @@
             </section>
             <!-- 뉴스페이지 끝 -->
             <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="education">
+            <!-- 게시판 페이지-->
+        	 <section class="resume-section" id="boardlist">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Interests</h2>
+                    <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
+                    <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
+                </div>
+            </section>
+            <hr class="m-0" />
+            
+            <!-- education-->
+                <section class="resume-section" id="education">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Education</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -458,15 +467,7 @@
                     </ul>
                 </div>
             </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="interests">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                    <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
-                </div>
-            </section>
+           
             <hr class="m-0" />
             <!-- Awards-->
             <section class="resume-section" id="awards">
