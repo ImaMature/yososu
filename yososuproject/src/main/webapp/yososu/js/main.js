@@ -1,38 +1,8 @@
-
-/*//검색
-function search(){
-	alert("펑션작동");
-	var keyword = document.getElementById("keyword").value;
-	alert(keyword);
-	
-	$.ajax({ //페이지 전환이 없음 [ 해당 페이지와 통신 ]
-				url : "searchcontroller.jsp",
-				data : {keyword : keyword},
-				success : function(result){
-					if(result){
-						alert(result);
-						var str =''
-						for(var i=0; i<result.length; i++){
-							str += '<span>' + result[i].data + '</span><br/>';
-						}
-						$("#page").html(str);
-							 
-					}else{
-						$("#addr").html('');
-						alert("관리자 문의");
-					}
-				}
-			});
-}*/
-
-//지도(카카오api)	
-
-	
 	
 	//근처 주유소 찾기 start
 	$("#findnearbtn").click(function(){
 		
-		
+		alert("실행");
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -45,24 +15,24 @@ function search(){
 		if (navigator.geolocation) {
 		    
 		    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-			
+			//alert("실행2");
 		    navigator.geolocation.getCurrentPosition(function(position) {
 				//현재 위치
 		        var lat2 = position.coords.latitude, // 위도
 		            lon2 = position.coords.longitude; // 경도
 					//현재 위치 테스트
-					//alert("lat2 : "+ lat2 + " lon2 : " + lon2);
+					alert("lat2 : "+ lat2 + " lon2 : " + lon2);
 					
 		        var locPosition = new kakao.maps.LatLng(lat2, lon2), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 		        message = '<div class="text-center" style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
 				arr = [];
 				arr2 = [];
 					 $.ajax({
-						
-						url: "locationController.jsp" ,
+						url: "../controller/locationController.jsp" ,
 						data:{ lat4 : lat2 , lon4 : lon2 } , 
 						success : function(result){
-							arr = result.split(",");  //0~8 
+							arr = result.split(",");
+							//alert(arr);
 							for(i=0; i<arr.length; i++){
 								arr2[i] = arr[i].split("_");
 								//alert(arr2[i]);
@@ -71,18 +41,18 @@ function search(){
 							for(j=0; j<arr2.length; j++){
 								/*alert(arr2[j][0]) // 경도
 								alert(arr2[j][1]) // 위도
-								alert(arr2[j][2]) // 이름 */
-								//alert(arr2[j].length)
-								//alert(arr2[j][0]+" "+ arr2[j][1]);
+								alert(arr2[j][2]) // 이름 
+								alert(arr2[j].length);
+								alert(arr2[j][0]+" "+ arr2[j][1]);*/
 								if(j==0){
 									//[가 붙은 인덱스의 위치 찾기
-									var hi =arr2[j][0].indexOf("["); 
+									//var hi =arr2[j][0].indexOf("["); 
 									//20이 나옴
 									//alert(arr2[j][0].split("[")[1]);
 									//첫번째 주유소를 찾기 위해서 첫번재 좌표에서 "["을 기준으로 1번째 인덱스 가져오기
 									arr2[j][0]=arr2[j][0].split("[")[1];
 									//첫번째 주유소의 좌표의 경도가 나온다.
-									alert(arr2[j][0]);
+									//alert(arr2[j][0]);
 								}
 								else if(j==arr2.length-1){
 									//alert(arr2[j][arr2.length-1].split("]")[0]);
@@ -95,11 +65,12 @@ function search(){
 					        	displayMarker(locPosition2, message2);
 									
 							}
+							
 							displayMarker(locPosition, message);
 						}
 					});
 				 
-				map2.setCenter(locPosition2); 
+				map2.setCenter(locPosition); 
 		      });
 		    
 		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -139,12 +110,12 @@ function search(){
 	
 //a태그 누르면 해당 주유소 표시하기
 function detailmap(laat, lnng){
-	alert("실행");
+	//alert("실행");
 	//var lng3 = 129.19361230; var lat3 =35.81250810;
 	var lat3 = laat;
 	var lng3 = lnng;
-	alert(lat3);
-	alert(lng3);
+	//alert(lat3);
+	//alert(lng3);
 	var container2 = document.getElementById('map');
 	var options2 = {
 		center: new kakao.maps.LatLng(lat3, lng3),
@@ -168,7 +139,6 @@ function detailmap(laat, lnng){
 	    // 마커의 위치를 지도중심으로 설정합니다 
 	    //marker3.setPosition(map3.getCenter()); 
 	    marker3.setMap(map3); 
-
 	}
 }
 

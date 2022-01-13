@@ -11453,7 +11453,7 @@ section.resume-section .resume-section-content {
 }
 
 #newscontent{
-	font-size: 0.8vw;
+	font-size: 0.8em;
 	letter-spacing : 0.05rem;
 	line-height: 180%;
 }

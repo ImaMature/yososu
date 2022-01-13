@@ -4,7 +4,7 @@
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.io.BufferedReader"%>
 <%@page import="java.net.URL"%>
-<%@page import="yososuproject.Databases"%>
+<%@page import="dto.Databases"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -40,8 +40,9 @@ JSONArray DEFArray = (JSONArray) jsonObject.get("data");
 //객체로 담아서 해당 반경의 주유소 찾기
 double lat = Double.parseDouble(request.getParameter("lat4")); //경도
 double lng = Double.parseDouble(request.getParameter("lon4")); //위도
-System.out.println("js에서 넘어온 현재 경도 : "+lat);
-System.out.println("js에서 넘어온 현재 위도 : "+lng);
+
+//System.out.println("js에서 넘어온 현재 경도 : "+lat);
+//System.out.println("js에서 넘어온 현재 위도 : "+lng);
 
 //api 파싱한 정보가 담긴 리스트
 ArrayList<Databases> arr = new ArrayList<>();
@@ -113,7 +114,7 @@ for(int y = 0; y<arr.size(); y++){
 	for(int m=0; m<arr2.size(); m++){
 		//두 arraylist의 이름이 같고 거리가 5km보다 작다면
 		if(arr.get(y).getAddr().equals(arr2.get(m).getAddr()) && arr2.get(m).getDistance() < 4){ 
-			System.out.println("==========================================");
+			/* System.out.println("==========================================");
 			System.out.println("arr1 name :" + arr.get(y).getName());
 			System.out.println("arr1 재고 : "+arr.get(y).getInventory());
 			System.out.println("arr2 주소 : "+arr2.get(m).getAddr());
@@ -121,7 +122,7 @@ for(int y = 0; y<arr.size(); y++){
 			System.out.println("arr1 lat : " + arr.get(y).getLat() + "arr1 lng : " + arr.get(y).getLng());
 			System.out.println("arr1 전화번호 : "+arr.get(y).getTel());
 			System.out.println("arr2 distance :" + arr2.get(m).getDistance()); 
-			
+			 */
 			Databases databases2 = new Databases(arr.get(y).getName(), 
 												arr.get(y).getInventory(),
 												arr2.get(m).getAddr(),
@@ -139,4 +140,4 @@ for(int y = 0; y<arr.size(); y++){
 	}
 }
 %>
-<%=arr3%>
+<%out.print(arr3);%>

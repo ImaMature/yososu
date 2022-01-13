@@ -1,10 +1,12 @@
+<%@page import="dao.BoardDao"%>
+<%@page import="dto.Board"%>
+<%@page import="dto.Databases"%>
 <%@page import="org.jsoup.nodes.Element"%>
 <%@page import="org.jsoup.select.Elements"%>
 <%@page import="org.jsoup.nodes.Document"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="yososuproject.Databases"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -32,9 +34,16 @@
 		}
 		String s= "";
 		String [] aa = new String [1024];
+		
+		//Database ArrayList
 		ArrayList<Databases> a1 = new ArrayList<>();
 		
 		Databases db = new Databases();
+		
+		//게시판 ArrayList 출력용
+		ArrayList<Board> boardarr = BoardDao.getBoardDao().boardList();
+		//System.out.println("boardarrC : " + boardarr.get(0).getB_contents());
+		//System.out.println("boardarrN : " + boardarr.get(0).getB_no());
 		
 		//totalCount 빼오기 위한 api
 		URL url2 = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page=1&perPage=100&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
@@ -81,8 +90,10 @@
 			 		
 			 		int currentpage = Integer.parseInt(pagenum);
 					int startrow = (currentpage-1)*listsize;
-					int endrow = currentpage*listsize;
-					
+					int endrow = currentpage*listsize; //현재페이지 마지막 번호
+					//System.out.println("현재페이지 : " + currentpage);
+					//System.out.println("시작페이지 : " + startrow);
+					//System.out.println("현재페이지 마지막 번호: " + endrow);
 			 		//화면당 표시할 게시물 수
 			 		int ls = 0;
 			 		//마지막 페이지
@@ -207,25 +218,25 @@
 														lp = lr / ls+1;	// * 총게시물/페이당게시물+1
 													}
 													
-													System.out.println("cp : "+cp);
-													System.out.println("er : "+er);
+													//System.out.println("cp : "+cp);
+													//System.out.println("er : "+er);
 													//시작점          총게시물수
-												 for(int i=sr; i < er; i++){
-														%>
-														 <tbody >
-															<tr>
-																<td>
-																<a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a>
-																</td>
-																<td id="addr"><%=a1.get(i).getAddr() %></td>
-																<td><%=a1.get(i).getPrice() %></td>
-																<td><%=a1.get(i).getTel() %></td>
-																<td><%=a1.get(i).getInventory() %></td>
-																<td id="" style="display: none;"></td>
-															</tr>
-														</tbody>  
-													<%
-												}
+													 for(int i=sr; i < er; i++){
+															%>
+															 <tbody >
+																<tr>
+																	<td>
+																	<a href="#mainmap" onclick="detailmap(<%=a1.get(i).getLat()%>, <%=a1.get(i).getLng()%>);"><%=a1.get(i).getName() %></a>
+																	</td>
+																	<td id="addr"><%=a1.get(i).getAddr() %></td>
+																	<td><%=a1.get(i).getPrice() %></td>
+																	<td><%=a1.get(i).getTel() %></td>
+																	<td><%=a1.get(i).getInventory() %></td>
+																	<td id="" style="display: none;"></td>
+																</tr>
+															</tbody>  
+														<%
+													}
 														//총 게시물 수
 											 		lastrow = lr;
 											 		//System.out.print(lastrow);
@@ -240,6 +251,7 @@
 													startrow = sr;
 													//System.out.print(startrow);
 													endrow = er;
+													System.out.println("ls : " + ls +", "+ "er : "+ er);
 												}
 										%>
 										</table>
@@ -314,13 +326,14 @@
             <section class="resume-section" id="mainmap">
 	         <div class="resume-section-content">
 	             <h2 class="mb-1 text">요소수 지도</h2>
+	             <p>메인 페이지에서 상호명을 클릭하시면 여기에 지도가 표시됩니다.</p>
 	             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
 	                 <div class="resume-section" id ="education">
 						<div class="resume-section-content">
 							<div>
 								<button class="btn btn-primary mx-0 my-4" style="color:white;" id="findnearbtn">근처 요소수 주유소 찾기</button>
 							</div>
-							<div id="map" style="width:80vw; height:34vw; border: 1px solid black;"></div>
+							<div id="map" style="width:80vw; height:32vw; border: 1px solid black;"></div>
 							
 							</div>
 						</div>
@@ -359,9 +372,7 @@
     					Element articleElement = photoElements.get(i);
     					Elements aElements = articleElement.select("a");
     					Element aElement = aElements.get(0);
-    					
     					String articleUrl = aElement.attr("href");		// 기사링크
-    					
     					Element imgElement = aElement.select("img").get(0);
     					String imgUrl = imgElement.attr("src");			// 사진링크
     					String title = imgElement.attr("alt");			// 기사제목
@@ -379,7 +390,7 @@
 	                            <div><p id="newscontent">&nbsp;&nbsp;<%=content %></p></div>
                             </div>
                         </div>
-                            <span style="font-size: 0.2rem;"><a href="<%=articleUrl %>" class="-bs-gray-800"><img src="assets/img/http.png"></a></span>
+                            <span style="font-size: 0.2rem;"><a href="<%=articleUrl %>" class="-bs-gray-800"><img src="../assets/img/http.png"></a></span>
                     </div>
                  	<%}
     			
@@ -396,9 +407,70 @@
             <!-- 게시판 페이지-->
         	 <section class="resume-section" id="boardlist">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                    <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
+	                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+	                    <h2 class="mb-2">게시판</h2>
+	                    <div class="subheading mb-3"> 익명 게시판입니다. 바르고 고운말을 사용합시다. </div>
+	                    <span>제목을 누르시면 글 상세페이지로 이동합니다.</span>
+	                    <div>
+	                    <button type="button" class="btn btn-primary me-2" data-bs-target="#boardwritebtn" data-bs-toggle="modal" style="color: white;"> 글 등록 </button>
+	                    </div>
+	                    <table class="table table-responsive">
+		                    <thead>
+		                    	<tr>
+		                    		<th>번호</th>
+		                    		<th>제목</th>
+		                    		<th>작성자</th>
+		                    		<th>작성일</th>
+		                    		<th>조회수</th>
+		                    	</tr>
+		                    </thead>
+		                    <tbody>	
+		                    <%
+		                    ArrayList<String> b_contentsArr = new ArrayList<String>();
+		                    for(int y=0; y<boardarr.size(); y++) {%>
+		                    	<tr>
+		                    		<td><%=boardarr.get(y).getB_no() %></td>
+		                    		<td>
+		                    			<a href="javascript:void(0);" onclick="boardupdate(<%=boardarr.get(y).getB_no()%>, 
+				                    		<%=boardarr.get(y).getB_writer() %>, 
+				                    		<%=boardarr.get(y).getB_createdDate() %>, 
+				                    		<%=boardarr.get(y).getB_count() %>, 
+				                    		<%=boardarr.get(y).getB_contents()%>,
+				                    		<%=boardarr.get(y).getB_password()%>)">
+				                    		<%=boardarr.get(y).getB_title() %>
+			                    		</a>
+		                    		</td>
+		                    		<td><%=boardarr.get(y).getB_writer() %></td>
+		                    		<td><%=boardarr.get(y).getB_createdDate() %></td>
+		                    		<td><%=boardarr.get(y).getB_count() %></td>
+		                    	</tr>
+		                    <%	
+		                    }
+		                    %>	
+	                    	</tbody>
+	                    </table>
+	                    
+	                    <!-- 테이블 글쓰기 모달창 -->
+	                    <div class="modal fade" tabindex="-1" role="dialog" id="boardwritebtn" data-bs-keyboard="false" data-bs-backdrop="static">
+		                    <div class="modal-dialog" role="document">
+		                        <div class="modal-content rounded-4 shadow" style="width:460px; height: 700px;">
+		                            <div class="modal-body p-4 text-center">
+		                                <h5 class="mb-0">글쓰기 창</h5>
+		                                <p class="mb-3" id="deletemsg">바른말 고운말 부탁드립니다.</p>
+		                                <input type="text" name="b_title" class="form-control" placeholder="제목" id="b_title">
+		                                <input type="text" name="b_writer" class="form-control mt-3" placeholder="아이디" id="b_writer">
+		                                <input type="password" name="b_password" class="form-control mt-3" placeholder="비밀번호" id="b_password">
+		                                <input type="hidden" name="b_no" class="form-control mt-3" id="b_no">
+		                                <textarea class="form-control mt-3" placeholder="내용" id="b_contents" style="height:60%;"></textarea>
+		                            </div>
+		                            <div class="modal-footer flex-nowrap p-0">
+		                                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" onclick="boardwrite();"><strong>등록하기</strong></button>
+		                                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"  data-bs-dismiss="modal">취소하기</button>
+		                            </div>
+		                        </div>
+		                    </div>
+	                	</div>
+	                </div>
                 </div>
             </section>
             <hr class="m-0" />
@@ -516,15 +588,7 @@
                 </div>
             </section>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <!-- js호출 -->
-   		<script src="js/main.js"></script>
-   		
-   		<script type="text/javascript">
-   	/* 	
+   		<!--   	/* 	
    		$(document).ready(function(){
    	       $("#keyword").keyup(function() {
    	           var k = $(this).val();
@@ -534,9 +598,7 @@
    	           $(temp).parent().show();
    	           $(temp1).parent().show();
    	     })
-   	}) */
-   		
-   		</script>
+   	}) */ -->
    		
    		
     </body>
