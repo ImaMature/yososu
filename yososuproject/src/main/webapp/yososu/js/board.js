@@ -28,9 +28,19 @@ function boardwrite() {
 }
 
 //2. 글 수정
-function boardupdate(b_no, b_writer, b_createdDate, b_count, b_contents, b_title, b_password ) {
+function boardupdate(b_no) {
 	alert("알림");
-	alert(b_no+" "+b_writer+" "+ b_createdDate+" "+ b_count +" "+b_contents + " " + b_title+ " "+b_password);
+	alert(b_no);
+	var b_no = b_no;
+	if(b_no != null){
+		$.ajax({
+			url:"../controller/boradupdatecontroller.jsp",
+			data:{b_no:b_no},
+			success:function(ressult){
+				alert(result);
+			}
+		});
+	}
 }
 
 //3. 글 삭제

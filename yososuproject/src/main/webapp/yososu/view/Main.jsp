@@ -412,7 +412,7 @@
 	                    <div class="subheading mb-3"> 익명 게시판입니다. 바르고 고운말을 사용합시다. </div>
 	                    <span>제목을 누르시면 글 상세페이지로 이동합니다.</span>
 	                    <div>
-	                    <button type="button" class="btn btn-primary me-2" data-bs-target="#boardwritebtn" data-bs-toggle="modal" style="color: white;"> 글 등록 </button>
+	                    <button type="button" class="btn btn-primary me-2" data-bs-target="#modalwrite" data-bs-toggle="modal" style="color: white;"> 글 등록 </button>
 	                    </div>
 	                    <table class="table table-responsive">
 		                    <thead>
@@ -431,12 +431,7 @@
 		                    	<tr>
 		                    		<td><%=boardarr.get(y).getB_no() %></td>
 		                    		<td>
-		                    			<a href="javascript:void(0);" onclick="boardupdate(<%=boardarr.get(y).getB_no()%>, 
-				                    		<%=boardarr.get(y).getB_writer() %>, 
-				                    		<%=boardarr.get(y).getB_createdDate() %>, 
-				                    		<%=boardarr.get(y).getB_count() %>, 
-				                    		<%=boardarr.get(y).getB_contents()%>,
-				                    		<%=boardarr.get(y).getB_password()%>)">
+		                    			<a href="javascript:void(0);" data-bs-target="#modalview" onclick="boardupdate(<%=boardarr.get(y).getB_no()%>);">
 				                    		<%=boardarr.get(y).getB_title() %>
 			                    		</a>
 		                    		</td>
@@ -451,7 +446,7 @@
 	                    </table>
 	                    
 	                    <!-- 테이블 글쓰기 모달창 -->
-	                    <div class="modal fade" tabindex="-1" role="dialog" id="boardwritebtn" data-bs-keyboard="false" data-bs-backdrop="static">
+	                    <div class="modal fade" tabindex="-1" role="dialog" id="modalwrite" data-bs-keyboard="false" data-bs-backdrop="static">
 		                    <div class="modal-dialog" role="document">
 		                        <div class="modal-content rounded-4 shadow" style="width:460px; height: 700px;">
 		                            <div class="modal-body p-4 text-center">
