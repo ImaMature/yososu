@@ -52,13 +52,14 @@
  
  ![Untitled](https://user-images.githubusercontent.com/88884623/149661459-5e6cd15d-da73-4e00-bab7-5ecce61d2c2e.png)
 
-주유소의 상호명, 주소, 요소수 가격, 전화번호, 요소수 재고량이 나와있는 테이블 jsp 코드이다.
+주유소의 상호명, 주소, 요소수 가격, 전화번호, 요소수 재고량이 나와있는 테이블 jsp 코드입니다.
 
 프론트로 보자면 이렇습니다.
 
 ![Untitled (1)](https://user-images.githubusercontent.com/88884623/149661492-ce9bbf42-e142-4554-b8a8-909a0306e1a6.png)
 
-이 페이지에서 상호명을 누르면 oncllick메소드가 실행되며 위도와 경도를 js로 넘겨줍니다. 그리고 동시에 프론트에서는 지도 페이지로 스크롤이 됩니다. (a href="#mainmap”로 해당 id가 있는 div로 이동이 가능합니다!!)
+이 페이지에서 상호명을 누르면 `oncllick 메소드`가 실행되며 `위도`와 `경도`를 `js`로 넘겨줍니다.<br>
+그리고 동시에 프론트에서는 지도 페이지로 스크롤이 됩니다. (`a href="#mainmap”`로 해당 id가 있는 div로 이동이 가능합니다!!)
 
 ```jsx
 //a태그 누르면 해당 주유소 표시하기
@@ -88,7 +89,9 @@ function detailmap(laat, lnng){
 }
 ```
 
-넘겨받은 위도(laat)와 경도(lnng)를 options2에 담습니다. 저 options2는 지도를 표시하기 위한 속성들이 있는 객체입니다. center로 카카오 api로 해당 좌표의 지도를 가운데에 두고 level로 지도의 확대 범위를 설정합니다.
+넘겨받은 `위도(laat)`와 `경도(lnng)`를 options2에 담습니다. <br>
+저 options2는 지도를 표시하기 위한 속성들이 있는 객체입니다. <br>
+center로 카카오 api로 해당 좌표의 지도를 `가운데`에 두고 level로 지도의 `확대 범위`를 설정합니다.
 
 그리고 id가 map인 div를 container2객체에 담아서 map3에 지도 정보로 저장합니다.
 
@@ -204,17 +207,17 @@ function detailmap(laat, lnng){
 
 위 토글은 근처 주유소를 찾아주는 javascript문의 전문입니다. 너무 길어서 숨겼습니다.
 
-아이디가 findnearbtn인 버튼을 프론트에서 눌렀다면, 이곳이 실행됩니다.
+아이디가 `findnearbtn`인 버튼을 프론트에서 눌렀다면, 이곳이 실행됩니다.
 
 지도를 먼저 div에 띄워서 보여줘야 합니다. 그렇지 않으면 지도가 빈칸으로 나오며 실행되지 않습니다.
 
 ![Untitled (5)](https://user-images.githubusercontent.com/88884623/149661555-6973558e-3b2c-4000-a726-44069dc82d6f.png)
 
-level 로 지도의 확대 크기를 정할 수 있고, 지도가 표시되는 중심좌표를 정할 수 있습니다.
+`level` 로 지도의 확대 크기를 정할 수 있고, 지도가 표시되는 `중심좌표`를 정할 수 있습니다.
 
 그 다음에 GPS로 현재의 위치를 알아내야 합니다.
 
-알아낸 위도와 경도들로 좌표들을 설정합니다. message에는 원하는 HTML을 저장할 수 있습니다.
+알아낸 위도와 경도들로 좌표들을 설정합니다. `message`에는 원하는 HTML을 저장할 수 있습니다.
 
 ```jsx
 if (navigator.geolocation) {
@@ -232,7 +235,7 @@ if (navigator.geolocation) {
 
 이후에 ajax문을 사용했습니다. 
 
-왜냐하면 프론트에서 버튼을 누르면 페이지 이동없이 비동기식으로 지도를 띄우고 싶었기 때문입니다.
+왜냐하면 프론트에서 버튼을 누르면 페이지 이동없이 `비동기식`으로 지도를 띄우고 싶었기 때문입니다.
 
 그래서 위의 현재 위치 위도 경도를 locationController로 전달해 주었습니다.
 
@@ -247,14 +250,14 @@ if (navigator.geolocation) {
 
      
 
-컨트롤러에서 
-![Untitled (8)](https://user-images.githubusercontent.com/88884623/149662431-e03aee1c-efd6-40fb-80c9-a3237bd0061b.png)
+컨트롤러에서    
+![Untitled (8)](https://user-images.githubusercontent.com/88884623/149662431-e03aee1c-efd6-40fb-80c9-a3237bd0061b.png)   
 
 경도와 위도를 double로 받아온 뒤에
 
 리스트를 3개 선언했습니다.
 
-Databases는 요소수 객체들을 (캡슐화)객체화시키기 위한 클래스로, 요소수 api 데이터의 속성값들의 객체, 생성자,  get set메소드들이 있습니다.
+`Databases`는 요소수 객체들을 (캡슐화)객체화시키기 위한 클래스로, 요소수 api 데이터의 속성값들의 객체, 생성자,  get set메소드들이 있습니다.
 
 <details>
 <summary> Databases</summary>
@@ -446,11 +449,11 @@ Databases는 요소수 객체들을 (캡슐화)객체화시키기 위한 클래�
 ![Untitled (9)](https://user-images.githubusercontent.com/88884623/149662551-1868ed93-b15c-4608-9e7f-c6fe9c4fac81.png)
 
 
-하나는 api에서 새로 파싱한 정보를 담을 리스트고
+하나는 api에서 `새로 파싱한 정보를 담을 리스트`고
 
-두번째는 파싱한 사이즈 만큼 반복문을 돌려 나온 이름과 거리가 담긴 리스트입니다.
+두번째는 파싱한 사이즈 만큼 반복문을 돌려 나온 `이름과 거리가 담긴 리스트`입니다.
 
-마지막은 두 리스트를 비교해서 값을 담아 js로 넘겨줄 리스트입니다.
+마지막은 두 리스트를 비교해서 값을 담아 `js로 넘겨줄 리스트`입니다.
 
 <details>
  <summary>이름과 거리 담기</summary>
@@ -491,41 +494,20 @@ Databases는 요소수 객체들을 (캡슐화)객체화시키기 위한 클래�
 ```
 </details>
     
-    파싱한 사이즈만큼 반복문을 돌리고, 전체 데이터로부터 모든 위도, 경도들을 객체화하였습니다.
+파싱한 사이즈만큼 반복문을 돌리고, 전체 데이터로부터 모든 위도, 경도들을 객체화하였습니다.
     
-    그 다음 위치를 구하는 코드들을 실행한 뒤, 나온 주소[ arr.get(u).getAddr() ]와 거리[distance]를 객체화해서 두번째 ArrayList에 담았습니다.
-    
+그 다음 위치를 구하는 코드들을 실행한 뒤, 나온 주소[ arr.get(u).getAddr() ]와 거리[distance]를 객체화해서 두번째 ArrayList에 담았습니다.
 
 위에서 담은 모든 파싱한 정보가 담긴 리스트와 두번째 이름과 거리가 담긴 리스트를 비교하여 
 
-```java
-for(int y = 0; y<arr.size(); y++){
-	for(int m=0; m<arr2.size(); m++){
-		//두 arraylist의 이름이 같고 거리가 4km보다 작다면
-		if(arr.get(y).getAddr().equals(arr2.get(m).getAddr()) && arr2.get(m).getDistance() < 4){ 
-			Databases databases2 = new Databases(arr.get(y).getName(), 
-												arr.get(y).getInventory(),
-												arr2.get(m).getAddr(),
-												arr.get(y).getPrice(),
-												arr.get(y).getLat(), 
-												arr.get(y).getLng(),
-												arr.get(y).getTel(),
-												arr.get(y).getOpenTime(),
-												arr2.get(m).getDistance());
-			arr3.add(databases2);
-		}
-		
-	}
-}
-%>
-<%out.print(arr3);%>
-```
+![image](https://user-images.githubusercontent.com/88884623/149662694-a2d94af5-5ff1-49ac-8cb0-4d6de833538e.png)
+
 
 3번째 리스트에 담아 ajax로 넘겨주었습니다.
 
-그런데 넘길때, 메모리주소 값들만 나오는 것이었습니다.
+그런데 넘길때, `메모리주소 값`들만 나오는 것이었습니다.
 
-그래서 Databases 클래스에 @Override를 해서
+그래서 Databases 클래스에 `@Override`를 해서
 
 ```java
 @Override
@@ -536,15 +518,16 @@ for(int y = 0; y<arr.size(); y++){
 	}
 ```
 
-toString()메소드로 String화 하고 Stringbuilder를 이용해 값들(경도, 위도, 상호명, 재고, 주소, 전화번호, 영업시간)을 aa 객체에 담아 반환했습니다.
+`toString()메소드`로 String화 하고 `Stringbuilder`를 이용해 값들(경도, 위도, 상호명, 재고, 주소, 전화번호, 영업시간)을 aa 객체에 담아 반환했습니다.
 
 그러니까, 통신한 결과 값들이 정상적으로 출력되었습니다.
 
 ---
 
-- 통신 이후 코드
+<details>
+<summary>통신 이후 코드</summary>
     
-    ```jsx
+```jsx
     arr = [];
     arr2 = [];
     	 $.ajax({
@@ -590,8 +573,8 @@ toString()메소드로 String화 하고 Stringbuilder를 이용해 값들(경도
      
     map2.setCenter(locPosition); 
       });
-    ```
-    
+```
+</details> 
 
 넘겨받은 값들을 `콤마(,)`를 기준으로 `split`하고, 다시 `언더바(_)`기준으로 `split`하였습니다.
 
@@ -636,6 +619,8 @@ toString()메소드로 String화 하고 Stringbuilder를 이용해 값들(경도
 ```
 
 그 후에 지도에 마커와 인포윈도우(message)를 표시하기 위해 함수를 호출했습니다.
+
+---
 
 </details>
 
