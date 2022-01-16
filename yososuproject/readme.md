@@ -16,9 +16,8 @@
   
 ## 2. 개발 환경
 - 운영체제 : Windows10
-- Front-end : html, CSS, Bootstrap
+- Front-end : html, CSS, Bootstrap, javaScript, JQuery
 - Back-end : JDK 11, Eclipse EE 2021-09
-- Database : MySQL
 - Server : Apache Tomcat 9.0
 - Version Control : Git
 
