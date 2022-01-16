@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 	  <meta charset="utf-8" />
+	 	 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=faa2da384c3af602fc9dedd5b0650258"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
@@ -19,7 +20,7 @@
         <link href="../css/styles.css" rel="stylesheet" />
 </head>
 <body>
-	
+    
 	
 	<!-- 부트스트랩 jQuery -->
 	<!-- jQuery가 있어야 ajax실행 가능 -->
@@ -28,21 +29,14 @@
 	<!-- 부트스트랩 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
-    <!-- 카카오api -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d44a4cba42c400793d1536694ef3c512"></script>
     
     <!-- js호출 -->
     <script src="../js/main.js"></script>
-    <script src="../js/board.js"></script>
     <script src="../js/scripts.js"></script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="../js/scripts.js"></script>
-	<script src="../js/board.js"></script>
-	<script type="text/javascript">
 
-	</script>
     
     
     <div class="container">
@@ -57,7 +51,6 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#DEFmain">메인 페이지</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#mainmap">지도</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#news">뉴스</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#boardlist">게시판</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>
                 </ul>

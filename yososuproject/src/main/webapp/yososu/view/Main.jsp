@@ -1,5 +1,3 @@
-<%@page import="dao.BoardDao"%>
-<%@page import="dto.Board"%>
 <%@page import="dto.Databases"%>
 <%@page import="org.jsoup.nodes.Element"%>
 <%@page import="org.jsoup.select.Elements"%>
@@ -22,9 +20,9 @@
 <!DOCTYPE html>
 <html>
  	<head>
-      
-         
+ 	
     </head>
+	
     <%
 		String keyword = request.getParameter("keyword");
 		String pagenum = request.getParameter("pagenum");
@@ -39,12 +37,6 @@
 		ArrayList<Databases> a1 = new ArrayList<>();
 		
 		Databases db = new Databases();
-		
-		//게시판 ArrayList 출력용
-		ArrayList<Board> boardarr = BoardDao.getBoardDao().boardList();
-		//System.out.println("boardarrC : " + boardarr.get(0).getB_contents());
-		//System.out.println("boardarrN : " + boardarr.get(0).getB_no());
-		
 		//totalCount 빼오기 위한 api
 		URL url2 = new URL("https://api.odcloud.kr/api/uws/v1/inventory?page=1&perPage=100&serviceKey=hm1u3zRV0ba96YTa5BqV4zu0jYFV2LGfPe2aRk0NyJVQsoX5FCSjuVth8RKvBvQzOW8ApIHwaxmajW9%2FRaYR5A%3D%3D");
 		BufferedReader bf2 = new BufferedReader(new InputStreamReader(url2.openStream(), "UTF-8"));
@@ -55,9 +47,8 @@
 		int s2 = Integer.parseInt(String.valueOf(jsonObject2.get("totalCount")));
 	%>
     <body id="page-top">
-        <!-- 네비바-->
+	    <!-- kakao 지도 api -->
         <%@include file="header.jsp" %>
-        <!-- 네비바 끝 -->
         
         <!-- 페이지 내용들-->
         <div class="container-fluid p-0">
@@ -71,29 +62,21 @@
 				 JSONParser jsonParser = new JSONParser();
 				 JSONObject jsonObject = (JSONObject) jsonParser.parse(rs);
 				 JSONArray DEFArray = (JSONArray) jsonObject.get("data");
-				 
 				 	s = String.valueOf(jsonObject.get("totalCount"));
-				 	
 			 		//총 게시물 수
 			 		int lastrow = Integer.parseInt(s);
-			 		//System.out.println(lastrow);
 			 		//화면당 표시할 게시물 수
 			 		int listsize = 100;
 			 		//마지막 페이지
 			 		int lastpage = 0;
-			 		//System.out.println(lastpage);
 			 		if( lastrow % listsize == 0 ){		// 만약에 총게시물/페이지당게시물 나머지가 없으면
 						lastpage = lastrow / listsize;		// * 총게시물/페이당게시물 
 					}else{
 						lastpage = lastrow / listsize+1;	// * 총게시물/페이당게시물+1
 					}
-			 		
 			 		int currentpage = Integer.parseInt(pagenum);
 					int startrow = (currentpage-1)*listsize;
 					int endrow = currentpage*listsize; //현재페이지 마지막 번호
-					//System.out.println("현재페이지 : " + currentpage);
-					//System.out.println("시작페이지 : " + startrow);
-					//System.out.println("현재페이지 마지막 번호: " + endrow);
 			 		//화면당 표시할 게시물 수
 			 		int ls = 0;
 			 		//마지막 페이지
@@ -147,7 +130,6 @@
 											<%
 												//DEFdetail에 넘겨지는 값들
 												if( keyword == null || keyword==""){ // 검색이 안되면
-													//System.out.println("공백");
 												for(int i=startrow+1; i < endrow; i++){
 													JSONObject DEFobject = (JSONObject) DEFArray.get(i);
 													%>
@@ -171,10 +153,7 @@
 														JSONObject DEFobject = (JSONObject) DEFArray.get(i);
 														str = (String)DEFobject.get("name");
 														int a11 = Integer.parseInt(s);
-														//System.out.println("a11" + a11);
 														cnt ++;
-														//System.out.println("갯수" + cnt);
-														//System.out.println(String.valueOf(str));
 														String str2 = (String)DEFobject.get("inventory");
 														String str3 = (String)DEFobject.get("addr");
 														String str4 = (String)DEFobject.get("price");
@@ -185,21 +164,11 @@
 														String str9= (String)DEFobject.get("openTime");
 														Databases db2 = new Databases(str, str2, str3, str4, str5, str6, str7, str8, str9);
 														String[] stt = db2.getAddr().split(" ");
-														//검색어 
-														//0번째에 경기도, 세종특별자치시, 제주특별자치도, 인천광역시, 충북충주시산척면평택제천고속도로109
-														//1번째에 용인시, 강서구, 양양군, 부강면
-														//2번째에 삼호읍, 가락대로, 석문면, 묘도1길, 남악로58번길
-														//3번째에 신북로, 1217, 1107(고암동)
-														//String addrsplit1 = stt[1];
-														//String addrsplit2 = stt[2];
-														//System.out.println(Arrays.toString(stt));
 														try{
 															if(stt[0].matches(".*" +keyword+ ".*") || stt[1].matches(".*" +keyword+ ".*") || stt[2].matches(".*" +keyword+ ".*") || stt[3].matches(".*" +keyword+ ".*")){
 																a1.add(db2);
-																//System.out.println("맞음"+i);
-															}//검색어 막는 법을 모르겠다.
+															}
 														}catch(Exception e){
-															//System.out.println(e.getMessage());
 														}
 													}
 													//위에 전역변수로 설정이 되어있으니까 새로 변수로 다시값을 바꿔주기
@@ -217,9 +186,6 @@
 													}else{
 														lp = lr / ls+1;	// * 총게시물/페이당게시물+1
 													}
-													
-													//System.out.println("cp : "+cp);
-													//System.out.println("er : "+er);
 													//시작점          총게시물수
 													 for(int i=sr; i < er; i++){
 															%>
@@ -239,19 +205,13 @@
 													}
 														//총 게시물 수
 											 		lastrow = lr;
-											 		//System.out.print(lastrow);
 											 		//화면당 표시할 게시물 수
 											 		listsize = ls;
 											 		//마지막 페이지
-											 		
 													lastpage = lp;
-													//System.out.println("lastpage : "+lastpage);
 											 		currentpage = cp;
-											 		//System.out.print(currentpage);
 													startrow = sr;
-													//System.out.print(startrow);
 													endrow = er;
-													System.out.println("ls : " + ls +", "+ "er : "+ er);
 												}
 										%>
 										</table>
@@ -404,185 +364,6 @@
             </section>
             <!-- 뉴스페이지 끝 -->
             <hr class="m-0" />
-            <!-- 게시판 페이지-->
-        	 <section class="resume-section" id="boardlist">
-                <div class="resume-section-content">
-	                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-	                    <h2 class="mb-2">게시판</h2>
-	                    <div class="subheading mb-3"> 익명 게시판입니다. 바르고 고운말을 사용합시다. </div>
-	                    <span>제목을 누르시면 글 상세페이지로 이동합니다.</span>
-	                    <div>
-	                    <button type="button" class="btn btn-primary me-2" data-bs-target="#modalwrite" data-bs-toggle="modal" style="color: white;"> 글 등록 </button>
-	                    </div>
-	                    <table class="table table-responsive">
-		                    <thead>
-		                    	<tr>
-		                    		<th>번호</th>
-		                    		<th>제목</th>
-		                    		<th>작성자</th>
-		                    		<th>작성일</th>
-		                    		<th>조회수</th>
-		                    	</tr>
-		                    </thead>
-		                    <tbody>	
-		                    <%
-		                    ArrayList<String> b_contentsArr = new ArrayList<String>();
-		                    for(int y=0; y<boardarr.size(); y++) {%>
-		                    	<tr>
-		                    		<td><%=boardarr.get(y).getB_no() %></td>
-		                    		<td>
-		                    			<a href="javascript:void(0);" data-bs-target="#modalview" onclick="boardupdate(<%=boardarr.get(y).getB_no()%>);">
-				                    		<%=boardarr.get(y).getB_title() %>
-			                    		</a>
-		                    		</td>
-		                    		<td><%=boardarr.get(y).getB_writer() %></td>
-		                    		<td><%=boardarr.get(y).getB_createdDate() %></td>
-		                    		<td><%=boardarr.get(y).getB_count() %></td>
-		                    	</tr>
-		                    <%	
-		                    }
-		                    %>	
-	                    	</tbody>
-	                    </table>
-	                    
-	                    <!-- 테이블 글쓰기 모달창 -->
-	                    <div class="modal fade" tabindex="-1" role="dialog" id="modalwrite" data-bs-keyboard="false" data-bs-backdrop="static">
-		                    <div class="modal-dialog" role="document">
-		                        <div class="modal-content rounded-4 shadow" style="width:460px; height: 700px;">
-		                            <div class="modal-body p-4 text-center">
-		                                <h5 class="mb-0">글쓰기 창</h5>
-		                                <p class="mb-3" id="deletemsg">바른말 고운말 부탁드립니다.</p>
-		                                <input type="text" name="b_title" class="form-control" placeholder="제목" id="b_title">
-		                                <input type="text" name="b_writer" class="form-control mt-3" placeholder="아이디" id="b_writer">
-		                                <input type="password" name="b_password" class="form-control mt-3" placeholder="비밀번호" id="b_password">
-		                                <input type="hidden" name="b_no" class="form-control mt-3" id="b_no">
-		                                <textarea class="form-control mt-3" placeholder="내용" id="b_contents" style="height:60%;"></textarea>
-		                            </div>
-		                            <div class="modal-footer flex-nowrap p-0">
-		                                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" onclick="boardwrite();"><strong>등록하기</strong></button>
-		                                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"  data-bs-dismiss="modal">취소하기</button>
-		                            </div>
-		                        </div>
-		                    </div>
-	                	</div>
-	                </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            
-            <!-- education-->
-                <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">University of Colorado Boulder</h3>
-                            <div class="subheading mb-3">Bachelor of Science</div>
-                            <div>Computer Science - Web Development Track</div>
-                            <p>GPA: 3.23</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2006 - May 2010</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">James Buchanan High School</h3>
-                            <div class="subheading mb-3">Technology Magnet Program</div>
-                            <p>GPA: 3.56</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2002 - May 2006</span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Programming Languages & Tools</div>
-                    <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-npm"></i></li>
-                    </ul>
-                    <div class="subheading mb-3">Workflow</div>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Mobile-First, Responsive Design
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Browser Testing & Debugging
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Functional Teams
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Agile Development & Scrum
-                        </li>
-                    </ul>
-                </div>
-            </section>
-           
-            <hr class="m-0" />
-            <!-- Awards-->
-            <section class="resume-section" id="awards">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Google Analytics Certified Developer
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Mobile Web Specialist - Google Certification
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - University of Colorado Boulder - Emerging Tech Competition 2009
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            2
-                            <sup>nd</sup>
-                            Place - University of Colorado Boulder - Emerging Tech Competition 2008
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - James Buchanan High School - Hackathon 2006
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            3
-                            <sup>rd</sup>
-                            Place - James Buchanan High School - Hackathon 2005
-                        </li>
-                    </ul>
-                </div>
-            </section>
-        </div>
    		<!--   	/* 	
    		$(document).ready(function(){
    	       $("#keyword").keyup(function() {
@@ -594,7 +375,8 @@
    	           $(temp1).parent().show();
    	     })
    	}) */ -->
-   		
-   		
+   	
+   		<%@include file="footer.jsp" %>
+   		</div>	
     </body>
 </html>

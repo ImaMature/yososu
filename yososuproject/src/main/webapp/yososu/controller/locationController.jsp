@@ -41,9 +41,6 @@ JSONArray DEFArray = (JSONArray) jsonObject.get("data");
 double lat = Double.parseDouble(request.getParameter("lat4")); //경도
 double lng = Double.parseDouble(request.getParameter("lon4")); //위도
 
-//System.out.println("js에서 넘어온 현재 경도 : "+lat);
-//System.out.println("js에서 넘어온 현재 위도 : "+lng);
-
 //api 파싱한 정보가 담긴 리스트
 ArrayList<Databases> arr = new ArrayList<>();
 //파싱한 사이즈만큼 반복문 돌려서 나온 이름과 거리가 담긴 리스트
@@ -53,7 +50,6 @@ ArrayList<Databases> arr3 = new ArrayList<>();
 
 //api 새로 가져와서 리스트에 담기
 for(int i =0; i<DEFArray.size();i++){
-	//System.out.print("getLat : "+arr.get(i).getLat());
 	JSONObject DEFobject = (JSONObject) DEFArray.get(i);
 	String name = (String)DEFobject.get("name");
 	String lat2 = (String)DEFobject.get("lat");
@@ -104,9 +100,6 @@ for(int u=0; u<arr.size(); u++){
 //거리 테스트
 for(int uu = 0; uu<arr2.size(); uu++){
 	if(arr2.get(uu).getDistance() < 4){ // 5km보다 작은 거리에 있는 리스트들을 출력 
-		//System.out.println("arr2 : "+arr2.get(uu).getName());
-		//System.out.println("arr2거리 : "+arr2.get(uu).getDistance());	
-		//System.out.println("arr2주소 : "+arr2.get(uu).getAddr());
 	}	
 }
 //두 arraylist 비교해서 값 3번째 arraylist에 담아서 js에 값 넘기기
@@ -114,15 +107,6 @@ for(int y = 0; y<arr.size(); y++){
 	for(int m=0; m<arr2.size(); m++){
 		//두 arraylist의 이름이 같고 거리가 5km보다 작다면
 		if(arr.get(y).getAddr().equals(arr2.get(m).getAddr()) && arr2.get(m).getDistance() < 4){ 
-			/* System.out.println("==========================================");
-			System.out.println("arr1 name :" + arr.get(y).getName());
-			System.out.println("arr1 재고 : "+arr.get(y).getInventory());
-			System.out.println("arr2 주소 : "+arr2.get(m).getAddr());
-			System.out.println("arr1 가격 : "+arr.get(y).getPrice());
-			System.out.println("arr1 lat : " + arr.get(y).getLat() + "arr1 lng : " + arr.get(y).getLng());
-			System.out.println("arr1 전화번호 : "+arr.get(y).getTel());
-			System.out.println("arr2 distance :" + arr2.get(m).getDistance()); 
-			 */
 			Databases databases2 = new Databases(arr.get(y).getName(), 
 												arr.get(y).getInventory(),
 												arr2.get(m).getAddr(),

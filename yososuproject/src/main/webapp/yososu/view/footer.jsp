@@ -7,11 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id = "footer">
+	<div id = "footer" class="container">
 		<div >
 			<ul>
 				<li>요소수 사이트 입니다.</li>
-				<li></li>
 			</ul>
 		</div>
 	</div>

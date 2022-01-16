@@ -2,12 +2,12 @@
 	//근처 주유소 찾기 start
 	$("#findnearbtn").click(function(){
 		
-		alert("실행");
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		    mapOption = { 
-		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		        level:7 // 지도의 확대 레벨 
-		    }; 
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level:7 // 지도의 확대 레벨 
+	    }; 
 		bounds = new kakao.maps.LatLngBounds();
 		var map2 = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		
@@ -15,13 +15,11 @@
 		if (navigator.geolocation) {
 		    
 		    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-			//alert("실행2");
 		    navigator.geolocation.getCurrentPosition(function(position) {
 				//현재 위치
 		        var lat2 = position.coords.latitude, // 위도
 		            lon2 = position.coords.longitude; // 경도
 					//현재 위치 테스트
-					alert("lat2 : "+ lat2 + " lon2 : " + lon2);
 					
 		        var locPosition = new kakao.maps.LatLng(lat2, lon2), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 		        message = '<div class="text-center" style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
@@ -32,10 +30,8 @@
 						data:{ lat4 : lat2 , lon4 : lon2 } , 
 						success : function(result){
 							arr = result.split(",");
-							//alert(arr);
 							for(i=0; i<arr.length; i++){
 								arr2[i] = arr[i].split("_");
-								//alert(arr2[i]);
 							}
 							
 							for(j=0; j<arr2.length; j++){
@@ -110,17 +106,18 @@
 	
 //a태그 누르면 해당 주유소 표시하기
 function detailmap(laat, lnng){
-	//alert("실행");
-	//var lng3 = 129.19361230; var lat3 =35.81250810;
 	var lat3 = laat;
 	var lng3 = lnng;
-	//alert(lat3);
-	//alert(lng3);
+	
+	alert(lat3);
+	alert(lng3);
 	var container2 = document.getElementById('map');
+	//alert(container2);
 	var options2 = {
 		center: new kakao.maps.LatLng(lat3, lng3),
 		level: 3
 	};
+		//alert(center);
 	
 
 	var map3 = new kakao.maps.Map(container2, options2);
@@ -142,6 +139,17 @@ function detailmap(laat, lnng){
 	}
 }
 
+/*$(document).ready( function(){
+	alert("dd");
+	var protocol = location.protocol;
+var hostName = location.hostname;
+var port = location.port;
+	console.log(protocol); // http:
+	console.log(hostName); // includestdio.tistory.com
+	console.log(port); // 아무것도 리턴되지 않음
+	// port 번호가 80인 경우 아무것도 리턴하지 않습니다.
+});
+*/
 
 
 		
