@@ -632,6 +632,9 @@ if (navigator.geolocation) {
 ![image](https://user-images.githubusercontent.com/88884623/149659785-486bf510-8970-4bfc-a3c7-15821179f609.png)   
 
 
-### 6. Font : 노토 산스 
-- 눈누 CDN([링크](https://noonnu.cc/font_page/34))
+### 6. 기타
+- font : 세방고딕([링크](https://noonnu.cc/font_page/656))
+- 테마 색상 : #6161d8 <img src="https://user-images.githubusercontent.com/88884623/149663141-34ef103f-f042-4b50-9e1e-847cc236aa16.png" width="15" height="15"/>
+
+
 
