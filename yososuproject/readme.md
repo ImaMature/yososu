@@ -1,5 +1,8 @@
-# Youtube
-## contentes
+# 요소수 프로젝트 요기래(Yogirae)<br>
+<img src="https://user-images.githubusercontent.com/88884623/149662987-8670df36-63cb-4774-ba8b-84c28552f077.png" width="150" height="150"/>
+
+
+## Index
 [1. 개요](#1-개요)   
 [2. 개발 환경](#2-개발-환경)  
 [3. 개발 일정](#3-개발-일정)   
