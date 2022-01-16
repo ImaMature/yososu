@@ -48,9 +48,9 @@
 |4|기타 (대댓글 등)|
  
 ## 5. Package 구조도
+![image](https://user-images.githubusercontent.com/88884623/149659785-486bf510-8970-4bfc-a3c7-15821179f609.png)   
 
 
-### 6.2. 코드공유방식 : Github, Kakaotalk
-### 6.3. Font : 노토 산스 
+### 6. Font : 노토 산스 
 - 눈누 CDN([링크](https://noonnu.cc/font_page/34))
 
