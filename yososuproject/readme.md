@@ -20,14 +20,15 @@
 - Back-end : JDK 11, Eclipse EE 2021-09
 - Server : Apache Tomcat 9.0
 - Version Control : Git
+- API : [Kakao Map API](https://developers.kakao.com/product/map) , [공공데이터 요소수 API](https://www.data.go.kr/data/15095040/openapi.do)  
 
 ## 3. 개발 일정
-- 기간 : 2021.12.10 ~ 2021.12.31  
+- 기간 : 2021.12.13 ~ 2021.01.14  
 - History
 
 |날짜|내용|
 |----|----|
-|2021.12.10|주제 선정|
+|2021.12.12|주제 선정|
 |2021.12.13|Front 초안 설계|
 |2021.12.13 ~ 2021.12.15|Front 초안 구현|
 |2021.12.14|Controller 구조도 제작|
