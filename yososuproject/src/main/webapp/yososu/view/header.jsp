@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 	  <meta charset="utf-8" />
-	 	 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=faa2da384c3af602fc9dedd5b0650258"></script>
+	 	 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
@@ -20,11 +20,11 @@
         <link href="../css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    
-	
-	<!-- 부트스트랩 jQuery -->
 	<!-- jQuery가 있어야 ajax실행 가능 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=62e02eeae62e967909b182a6158e2eaf"></script>
+	<!-- 부트스트랩 jQuery -->
 	
 	<!-- 부트스트랩 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>

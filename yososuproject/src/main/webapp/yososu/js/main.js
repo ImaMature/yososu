@@ -1,13 +1,15 @@
-	
+
+$(document).ready(function() {
 	//근처 주유소 찾기 start
 	$("#findnearbtn").click(function(){
 		
-		
+		alert("근처 주유소 찾기 버튼 누름");
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
 	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 	        level:7 // 지도의 확대 레벨 
 	    }; 
+		alert(mapContainer);
 		bounds = new kakao.maps.LatLngBounds();
 		var map2 = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		
@@ -102,7 +104,7 @@
 	});
 	//근처 주유소 찾기 end
 	
-	
+	});
 	
 //a태그 누르면 해당 주유소 표시하기
 function detailmap(laat, lnng){

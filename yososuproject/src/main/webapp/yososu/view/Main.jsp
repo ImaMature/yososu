@@ -49,7 +49,6 @@
     <body id="page-top">
 	    <!-- kakao 지도 api -->
         <%@include file="header.jsp" %>
-        
         <!-- 페이지 내용들-->
         <div class="container-fluid p-0">
 		<%
