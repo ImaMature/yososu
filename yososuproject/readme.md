@@ -45,7 +45,8 @@
 ## 4. 주요 기능
 <details>
 <summary>여기를 눌러주세요</summary>
-    
+    [yogirae.pdf](https://github.com/ImaMature/yososu/files/7905133/_._.pdf)
+
 ### 가장 주요했던 기능은 2개였습니다.
 
 둘다 지도를 사용했던 기능인데, 모두 카카오 지도 API를 사용했습니다.
@@ -625,7 +626,10 @@ if (navigator.geolocation) {
 ---
 
 </details>
-
+<details>
+	<summary>실행화면</summary>
+	
+</details>
  
 ## 5. Package 구조도
 ![image](https://user-images.githubusercontent.com/88884623/149659785-486bf510-8970-4bfc-a3c7-15821179f609.png)   
