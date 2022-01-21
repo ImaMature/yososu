@@ -45,7 +45,7 @@
 ## 4. 주요 기능
 <details>
  <summary> PDF 파일로 보기 </summary>
- [yogirae.pdf](https://github.com/ImaMature/yososu/files/7910440/_._.pdf)
+ ![yogirae.pdf](https://github.com/ImaMature/yososu/files/7910440/_._.pdf)
 </details>
 <details>
  <summary> 실행결과 요약 </summary>
