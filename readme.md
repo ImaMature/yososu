@@ -43,12 +43,13 @@
 |2022.01.11 ~ 2022.01.14|프로젝트 오류 수정 및 완성|
 
 ## 4. 주요 기능
-<summary> PDF 파일로 보기 </summary>
-[yogirae.pdf](https://github.com/ImaMature/yososu/files/7910440/_._.pdf)
+<details>
+ <summary> PDF 파일로 보기 </summary>
+ [yogirae.pdf](https://github.com/ImaMature/yososu/files/7910440/_._.pdf)
 </details>
 <details>
-<summary> 실행결과 요약 </summary>
-<img src="https://user-images.githubusercontent.com/88884623/150466174-9d33f1c9-96e5-4f31-8c71-780ad0efd0a1.gif">
+ <summary> 실행결과 요약 </summary>
+  <img src="https://user-images.githubusercontent.com/88884623/150466174-9d33f1c9-96e5-4f31-8c71-780ad0efd0a1.gif">
 </details>
  
 ## 5. Package 구조도
