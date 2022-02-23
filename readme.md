@@ -48,6 +48,10 @@
  ![yogirae](https://github.com/ImaMature/yososu/files/7910440/_._.pdf)
 </details>
 <details>
+ <summary> PPT 파일 </summary>
+ [장희동 요소수.pptx](https://github.com/ImaMature/yososu/files/8122653/default.pptx)
+ </details>
+<details>
  <summary> 실행결과 요약 </summary>
   <img src="https://user-images.githubusercontent.com/88884623/150466174-9d33f1c9-96e5-4f31-8c71-780ad0efd0a1.gif">
 </details>
